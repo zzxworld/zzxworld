@@ -3,11 +3,15 @@
 import os
 from fabric.api import env, run, cd
 
-env.deploy_path = 'your/deploy/path'
-env.src_path = os.path.join(env.deploy_path, 'src')
-
 def deploy():
     """部署应用
     """
-    with cd(env.src_path):
-        run('ls -l')
+    src_path = os.path.join(env.deploy_path, 'src')
+    with cd(src_path):
+        run('git checkout master && git pull')
+        run('composer install')
+        run('php artisan config:cache')
+        run('php artisan cache:clear')
+        run('php artisan route:clear')
+        run('php artisan view:clear')
+        run('php artisan queue:restart')
