@@ -13,3 +13,7 @@ yarn-error.log
 
 *.pyc
 fabfile.py
+public/js/
+public/css/
+public/fonts/
+public/mix-manifest.json
