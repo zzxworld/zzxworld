@@ -48,9 +48,14 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'name' => 'required|string|min:2|max:31|regex:/^\w+$/',
+            'email' => 'required|string|email|max:63|unique:users',
             'password' => 'required|string|min:6|confirmed',
+        ], [
+            'name.required' => '昵称没有设置',
+            'name.min' => '昵称不能少于 2 个字',
+            'name.max' => '昵称不能超过 31 个字',
+            'name.regex' => '只支持使用字母，数字或下划线组成昵称',
         ]);
     }
 
