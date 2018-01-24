@@ -26,4 +26,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * 判断是否为超级用户
+     */
+    public function getIsRootAttribute()
+    {
+        return $this->id == static::min('id');
+    }
 }
