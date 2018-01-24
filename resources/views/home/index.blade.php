@@ -3,5 +3,7 @@
 @section('title', '首页')
 
 @section('content')
-    <h1>Home</h1>
+    <div class="container">
+        <h1>Home</h1>
+    </div>
 @endsection
