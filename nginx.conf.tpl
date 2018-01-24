@@ -2,7 +2,6 @@ server {
     listen 80;
     server_name <domain>;
 
-    server_name <domain>;
     root <deploy_path>/src/public;
     index index.html index.htm index.php;
 
