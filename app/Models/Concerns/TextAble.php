@@ -20,4 +20,12 @@ trait TextAble
             'text' => $content,
         ]);
     }
+
+    /**
+     * 获取文本内容
+     */
+    public function getTextAttribute()
+    {
+        return $this->texts->pluck('text')->implode('');
+    }
 }
