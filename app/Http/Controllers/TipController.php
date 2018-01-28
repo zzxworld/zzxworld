@@ -40,6 +40,7 @@ class TipController extends Controller
         ]);
 
         $tip = new Tip;
+        $tip->user_id = $request->user()->id;
         $tip->save();
         $tip->saveText($request->input('content'));
 

@@ -15,6 +15,7 @@ class CreateTipsTable extends Migration
     {
         Schema::create('tips', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned()->comment('作者');
             $table->timestamps();
         });
     }
