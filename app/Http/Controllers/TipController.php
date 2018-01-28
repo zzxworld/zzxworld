@@ -22,6 +22,7 @@ class TipController extends Controller
      */
     public function create(Request $request)
     {
+        $this->authorize('create', Tip::class);
         return view('tips.create');
     }
 
@@ -30,6 +31,7 @@ class TipController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Tip::class);
         $this->validate($request, [
             'content' => 'required|min:32'
         ], [
@@ -43,4 +45,5 @@ class TipController extends Controller
 
         return redirect()->route('tips.index');
     }
+
 }

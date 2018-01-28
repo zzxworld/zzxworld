@@ -23,6 +23,7 @@ class TipPolicy
 
     public function create(User $user)
     {
+        return $user->id > 0;
     }
 
     public function update(User $user, Tip $tip)
