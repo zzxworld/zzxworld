@@ -17,3 +17,4 @@ public/js/
 public/css/
 public/fonts/
 public/mix-manifest.json
+app/Console/Commands/Test.php
