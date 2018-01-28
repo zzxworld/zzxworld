@@ -9,5 +9,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Text extends Model
 {
-
+    public function textable()
+    {
+        return $this->morphTo();
+    }
 }
