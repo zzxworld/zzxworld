@@ -15,12 +15,13 @@ class CreateTextsTable extends Migration
     {
         Schema::create('texts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('textable_type', 63)->comment('文本模型引用对象');
             $table->integer('textable_id')->unsigned()->comment('文本模型引用对象 id');
+            $table->string('textable_type', 63)->comment('文本模型引用对象');
+            $table->char('version', 32)->nullable()->comment('版本');
             $table->string('text', 1023)->nullable()->comment('文本数据');
             $table->timestamps();
 
-            $table->index(['textable_type', 'textable_id']);
+            $table->index(['textable_id', 'textable_type']);
         });
     }
 

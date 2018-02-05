@@ -16,9 +16,15 @@ trait TextAble
      */
     public function saveText(string $content)
     {
-        $this->texts()->create([
-            'text' => $content,
-        ]);
+        $this->texts()->delete();
+
+        $data = [];
+        $segments = Text::segment($content);
+        foreach ($segments as $segment) {
+            $data[] = ['text' => $segment];
+        }
+
+        $this->texts()->createMany($data);
     }
 
     /**
