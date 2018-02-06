@@ -16,3 +16,4 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::resource('tips', 'TipController');
+Route::resource('posts', 'PostController');

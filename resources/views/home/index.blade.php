@@ -1,6 +1,6 @@
 @extends('layouts/app')
 
-@section('title', '首页')
+@section('title', '首页 | zzxworld')
 
 @section('content')
     <div class="container">
