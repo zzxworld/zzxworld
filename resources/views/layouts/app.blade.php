@@ -25,10 +25,6 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{ url('tips') }}">技巧</a></li>
-                    </ul>
-
                     <ul class="nav navbar-nav navbar-right">
                         @guest
                             <li><a href="{{ route('login') }}">登录</a></li>
