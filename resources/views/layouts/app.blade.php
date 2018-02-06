@@ -62,5 +62,7 @@
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>
+
+    <!-- This page took {{ microtime(true) - LARAVEL_START }} seconds to display. -->
 </body>
 </html>
