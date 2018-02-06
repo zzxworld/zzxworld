@@ -10,7 +10,7 @@
                 <span>{{ $post->published_at->format('Y-m-d') }}</span>
             </div>
             <div class="panel-body">
-                {{ $post->text }}
+                {!! $post->html !!}
             </div>
         </div>
     </div>
