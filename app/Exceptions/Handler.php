@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
     {
         $url = URLAlteration::where('from', $request->path())->first();
         if ($url) {
-            return redirect($url->to);
+            return redirect($url->to, $url->httpCode);
         }
         return parent::render($request, $exception);
     }
