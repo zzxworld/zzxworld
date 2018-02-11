@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Models\URLAlteration;
 
 class Handler extends ExceptionHandler
 {
@@ -48,6 +49,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        $url = URLAlteration::where('from', $request->path())->first();
+        if ($url) {
+            return redirect($url->to);
+        }
         return parent::render($request, $exception);
     }
 }
