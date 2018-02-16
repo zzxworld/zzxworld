@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $posts = Post::orderBy('published_at', 'desc')->limit(20)->get();
+        $posts = Post::orderBy('published_at', 'desc')->paginate(20);
 
         return view('home.index', [
             'posts' => $posts
