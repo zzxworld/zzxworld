@@ -14,14 +14,25 @@ trait TextAble
     /**
      * 保存文本内容
      */
-    public function saveText(string $content)
+    public function saveText(string $content, $keepVersion=false)
     {
-        $this->texts()->delete();
+        $version = md5($content);
+        $exists = $this->texts()->where('version', $version)->count();
+        if ($exists) {
+            return;
+        }
+
+        if (!$keepVersion) {
+            $this->texts()->delete();
+        }
 
         $data = [];
         $segments = Text::segment($content);
         foreach ($segments as $segment) {
-            $data[] = ['text' => $segment];
+            $data[] = [
+                'version' => $version,
+                'text' => $segment,
+            ];
         }
 
         $this->texts()->createMany($data);
