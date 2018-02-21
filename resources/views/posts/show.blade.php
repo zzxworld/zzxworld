@@ -13,5 +13,8 @@
                 {!! $post->html !!}
             </div>
         </div>
+
+        @component('components.discuss', ['action'=>url('posts/'.$post->id.'/comments')])
+        @endcomponent
     </div>
 @endsection

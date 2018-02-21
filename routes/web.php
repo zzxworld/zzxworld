@@ -17,4 +17,5 @@ Auth::routes();
 
 Route::resource('tips', 'TipController');
 Route::resource('posts', 'PostController');
+Route::post('posts/{post}/comments', 'PostCommentController@store');
 Route::resource('linux/commands', 'LinuxCommandController');

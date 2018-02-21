@@ -1,6 +1,6 @@
 @extends('layouts/app')
 
-@section('title', '首页 | zzxworld')
+@section('title', '文章 | zzxworld')
 
 @section('content')
     <div class="container">
@@ -14,5 +14,7 @@
                 @endforeach
             </ul>
         </div>
+
+        {{ $posts->links() }}
     </div>
 @endsection

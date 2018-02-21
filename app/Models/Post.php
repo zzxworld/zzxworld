@@ -8,6 +8,7 @@ use Parsedown;
 class Post extends Model
 {
     use \App\Models\Concerns\TextAble;
+    use \App\Models\Concerns\CommentAble;
 
     protected $casts = [
         'published_at' => 'datetime',
