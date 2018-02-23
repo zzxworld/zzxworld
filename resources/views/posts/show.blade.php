@@ -14,7 +14,10 @@
             </div>
         </div>
 
-        @component('components.discuss', ['action'=>url('posts/'.$post->id.'/comments')])
+        @component('components.comment', [
+            'action' => url('posts/'.$post->id.'/comments'),
+            'comments' => $post->comments,
+        ])
         @endcomponent
     </div>
 @endsection
