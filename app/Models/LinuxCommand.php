@@ -8,6 +8,7 @@ use Parsedown;
 class LinuxCommand extends Model
 {
     use Concerns\TextAble;
+    use \App\Models\Concerns\CommentAble;
 
     /**
      * 自定义路由 id 字段
