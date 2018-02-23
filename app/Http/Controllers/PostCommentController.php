@@ -21,6 +21,6 @@ class PostCommentController extends Controller
 
         $comment->saveText($request->input('content'));
 
-        return redirect('posts/'.$post->id);
+        return redirect('posts/'.$post->id.'#comment-'.$comment->id);
     }
 }
