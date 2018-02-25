@@ -21,4 +21,12 @@ class Post extends Model
     {
         return Parsedown::instance()->text($this->text);
     }
+
+    /**
+     * 获取来源链接域名
+     */
+    public function getSourceURLDomainAttribute()
+    {
+        return parse_url($this->source_url, PHP_URL_HOST);
+    }
 }
