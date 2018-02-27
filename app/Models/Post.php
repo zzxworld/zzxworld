@@ -10,6 +10,7 @@ class Post extends Model
     use \App\Models\Concerns\TextAble;
     use \App\Models\Concerns\CommentAble;
 
+    protected $fillable = ['title', 'source_url'];
     protected $casts = [
         'published_at' => 'datetime',
     ];

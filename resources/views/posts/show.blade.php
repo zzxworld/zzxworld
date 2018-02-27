@@ -8,6 +8,8 @@
             <div class="panel-heading">
                 <h1 class="panel-title">{{ $post->title }}</h1>
                 <span>{{ $post->published_at->format('Y-m-d') }}</span>
+                <a href="{{ route('posts.edit', $post) }}">编辑</a>
+                <a href="javascript:;" class="btn-delete" data-id="{{ $post->id }}">删除</a>
             </div>
             <div class="panel-body">
                 {!! $post->html !!}
@@ -20,3 +22,26 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script charset="utf-8">
+        $(function () {
+            $('.btn-delete').on('click', function (e) {
+                if (!confirm('确定要删除此文章吗?')) {
+                    return false;
+                }
+
+                $.ajax({
+                    url: '/posts/'+e.target.dataset.id,
+                    type: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    success: function (response) {
+                        location.href = '/posts';
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
