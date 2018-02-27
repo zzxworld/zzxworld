@@ -21,14 +21,6 @@ server {
     error_page 404 /index.php;
 
     location ~ \.php$ {
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass  127.0.0.1:9000;
-        # fastcgi_pass unix:/var/run/php/php-fpm.sock;
-        fastcgi_index index.php;
-        include fastcgi_params;
-    }
-
-    location ~ \.php$ {
         fastcgi_pass  127.0.0.1:9000;
         fastcgi_index  index.php;
         include  fastcgi.conf;
