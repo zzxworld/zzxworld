@@ -8,8 +8,14 @@
             <div class="panel-heading">
                 <h1 class="panel-title">{{ $post->title }}</h1>
                 <span>{{ $post->published_at->format('Y-m-d') }}</span>
+
+                @can('update', $post)
                 <a href="{{ route('posts.edit', $post) }}">编辑</a>
+                @endcan
+
+                @can('delete', $post)
                 <a href="javascript:;" class="btn-delete" data-id="{{ $post->id }}">删除</a>
+                @endcan
             </div>
             <div class="panel-body">
                 {!! $post->html !!}

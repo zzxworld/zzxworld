@@ -34,7 +34,11 @@
                             <li><a href="{{ route('login') }}">登录</a></li>
                             <li><a href="{{ route('register') }}">注册</a></li>
                         @else
+
+                            @can('create', App\Models\Post::class)
                             <li><a href="{{ route('posts.create') }}">新增文章</a></li>
+                            @endcan
+
                             <li class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
                                     {{ Auth::user()->name }}

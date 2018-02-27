@@ -16,11 +16,13 @@ class PostController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Post::class);
         return view('posts/create');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', Post::class);
         $post = new Post($request->all());
         $post->published_at = date('Y-m-d H:i:s');
         $post->save();
@@ -35,11 +37,13 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
+        $this->authorize('update', Post::class);
         return view('posts.edit', ['post' => $post]);
     }
 
     public function update(Request $request, Post $post)
     {
+        $this->authorize('update', Post::class);
         $post->update($request->all());
         $post->saveText($request->input('content'));
         return redirect(route('posts.show', $post));
@@ -47,6 +51,7 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        $this->authorize('delete', Post::class);
         $post->delete();
     }
 }
