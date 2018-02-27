@@ -18,3 +18,4 @@ public/css/
 public/fonts/
 public/mix-manifest.json
 app/Console/Commands/Test.php
+.DS_Store
