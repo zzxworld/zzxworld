@@ -1,6 +1,6 @@
 @extends('layouts/app')
 
-@section('title', 'Linux '.$command->name.' 命令用法详解')
+@section('title', 'Linux '.$command->name.' 命令用法详解 | zzxworld')
 
 @section('content')
     <div class="container">
