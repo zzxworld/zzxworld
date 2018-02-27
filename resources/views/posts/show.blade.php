@@ -18,11 +18,5 @@
             </div>
             @endif
         </div>
-
-        @component('components.comment', [
-            'action' => url('posts/'.$post->id.'/comments'),
-            'comments' => $post->comments,
-        ])
-        @endcomponent
     </div>
 @endsection

@@ -8,11 +8,5 @@
             <div class="panel-heading"><h1 class="panel-title">Linux <code>{{ $command->name }}</code> 命令</h1></div>
             <div class="panel-body">{!! $command->html !!}</div>
         </div>
-
-        @component('components.comment', [
-            'action' => url('linux/commands/'.$command->name.'/comments'),
-            'comments' => $command->comments,
-        ])
-        @endcomponent
     </div>
 @endsection
