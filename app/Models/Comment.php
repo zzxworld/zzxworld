@@ -12,12 +12,20 @@ class Comment extends Model
     protected $appends = ['name', 'email', 'text'];
 
     /**
+     * 评论用户
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    /**
      * 获取评论用户姓名
      */
     public function getNameAttribute()
     {
         if ($this->user_id) {
-
+            return $this->user->name;
         } else {
             return $this->guest_name;
         }
@@ -29,7 +37,7 @@ class Comment extends Model
     public function getEmailAttribute()
     {
         if ($this->user_id) {
-
+            return $this->user->email;
         } else {
             return $this->guest_email;
         }

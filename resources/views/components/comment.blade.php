@@ -3,9 +3,10 @@
     <ul class="list-group">
         @foreach ($comments as $comment)
             <li id="comment-{{ $comment->id }}" class="list-group-item">
-            <span>{{ $comment->created_at->format('Y-m-d')}}</span>
-            <div>{{ $comment->text }}</div>
-        </li>
+                <span class="autohor">{{ $comment->name }}</span>
+                <span class="date">{{ $comment->created_at->format('Y-m-d')}}</span>
+                <div class="content">{{ $comment->text }}</div>
+            </li>
         @endforeach
     </ul>
     <div class="panel-body">
