@@ -9,10 +9,13 @@ class CommentController extends Controller
 {
     public function index(Request $request)
     {
+        $this->authorize('view', Comment::class);
+
         if ($request->isJson()) {
             $comments = Comment::orderBy('id', 'desc')->paginate(50);
             return ['comments' => $comments];
         }
+
         return view('comments.index');
     }
 
@@ -21,7 +24,10 @@ class CommentController extends Controller
      */
     public function update(Comment $comment, Request $request)
     {
+        $this->authorize('update', $comment);
+
         $comment->update($request->all());
+
         return ['message' => 'ok'];
     }
 
@@ -30,7 +36,10 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
+        $this->authorize('delete', $comment);
+
         $comment->delete();
+
         return ['message' => 'ok'];
     }
 }

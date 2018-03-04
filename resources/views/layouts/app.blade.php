@@ -38,7 +38,9 @@
                             <li><a href="{{ route('posts.create') }}">新增文章</a></li>
                             @endcan
 
+                            @can('view', App\Models\Post::class)
                             <li><a href="{{ route('comments.index') }}">评论管理</a></li>
+                            @endcan
 
                             <li class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
