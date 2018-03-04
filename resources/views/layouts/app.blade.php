@@ -10,7 +10,7 @@
 <link rel="canonical" href="{{ Request::url() }}">
 </head>
 <body>
-    <div id="app">
+    <div id="app-page">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -37,6 +37,8 @@
                             @can('create', App\Models\Post::class)
                             <li><a href="{{ route('posts.create') }}">新增文章</a></li>
                             @endcan
+
+                            <li><a href="{{ route('comments.index') }}">评论管理</a></li>
 
                             <li class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">

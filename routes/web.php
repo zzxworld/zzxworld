@@ -16,7 +16,11 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::resource('tips', 'TipController');
+
 Route::resource('posts', 'PostController');
 Route::post('posts/{post}/comments', 'PostCommentController@store');
+
 Route::resource('linux/commands', 'LinuxCommandController');
 Route::post('linux/commands/{command}/comments', 'LinuxCommandController@storeComment');
+
+Route::resource('comments', 'CommentController');
