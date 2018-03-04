@@ -10,6 +10,7 @@ def deploy():
     with cd(src_path):
         run('git checkout master && git pull')
         run('composer install')
+        run('npm install')
         run('npm run production')
         run('php artisan config:cache')
         run('php artisan cache:clear')
