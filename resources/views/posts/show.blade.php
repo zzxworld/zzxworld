@@ -27,7 +27,10 @@
             @endif
         </div>
 
-        @include('components.comment', ['comments' => $post->comments, 'action'=>url('posts/'.$post->id.'/comments')])
+        @include('components.comment', [
+            'comments' => $post->getAvailableComments(Auth::user(), request()->ip()),
+            'action' => url('posts/'.$post->id.'/comments'),
+        ])
     </div>
 @endsection
 
