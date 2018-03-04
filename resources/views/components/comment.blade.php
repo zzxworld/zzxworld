@@ -1,5 +1,5 @@
 <div class="panel panel-default comment-container" id="p-comment">
-    <div class="panel-heading"><h3 class="panel-title">讨论</h3></div>
+    <div class="panel-heading"><h3 class="panel-title">评论</h3></div>
     <ul class="list-group comments">
         @foreach ($comments as $comment)
             <li id="comment-{{ $comment->id }}" class="list-group-item comment">
