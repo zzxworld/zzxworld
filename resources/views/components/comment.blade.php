@@ -9,8 +9,23 @@
         @endforeach
     </ul>
     <div class="panel-body">
+        <p class="alert alert-info">您现在是匿名交流状态，发表内容前需要提供联系方式和姓名，发布的内容可能需要管理员审核后才能显示。</p>
         <form class="form" method="post" action="{{ $action }}">
             {{ csrf_field() }}
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="required">联系邮箱</label>
+                        <input class="form-control" type="text" name="email">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="required">姓名</label>
+                        <input class="form-control" type="text" name="name">
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
                 <textarea class="form-control" rows="5" name="content"></textarea>
             </div>

@@ -26,6 +26,8 @@
             </div>
             @endif
         </div>
+
+        @include('components.comment', ['comments' => $post->comments, 'action'=>url('posts/'.$post->id.'/comments')])
     </div>
 @endsection
 

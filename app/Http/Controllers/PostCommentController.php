@@ -11,11 +11,15 @@ class PostCommentController extends Controller
     public function store(Request $request, Post $post)
     {
         $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email',
             'content' => 'required',
         ]);
 
         $comment = $post->comments()->create([
             'user_id' => $request->user() ? $request->user()->id : 0,
+            'guest_name' => $request->input('name'),
+            'guest_email' => $request->input('email'),
             'ip' => $request->ip(),
         ]);
 
