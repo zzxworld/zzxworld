@@ -30,8 +30,8 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         @guest
-                            <li><a href="{{ route('login') }}">登录</a></li>
-                            <li><a href="{{ route('register') }}">注册</a></li>
+                            <li><a rel="nofollow" href="{{ route('login') }}">登录</a></li>
+                            <li><a rel="nofollow" href="{{ route('register') }}">注册</a></li>
                         @else
 
                             @can('create', App\Models\Post::class)
