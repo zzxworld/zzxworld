@@ -24,8 +24,7 @@
                         <td>@{{ comment.email }}</td>
                         <td>
                             <div>
-                                <span class="label label-primary">
-                                </span>
+                                <span class="label label-primary">@{{ comment.commentable_type }} : @{{ comment.commentable_id }}</span>
                             </div>
                             @{{ comment.text }}
                         </td>
