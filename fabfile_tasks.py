@@ -10,8 +10,6 @@ def deploy():
     with cd(src_path):
         run('git checkout master && git pull')
         run('composer install')
-        run('npm install')
-        run('npm run production')
         run('php artisan config:cache')
         run('php artisan cache:clear')
         run('php artisan route:clear')
@@ -25,3 +23,12 @@ def migrate():
     with cd(src_path):
         run('git checkout master && git pull')
         run('php artisan migrate')
+
+def npminstall():
+    """安装 JS 依赖组件
+    """
+    src_path = os.path.join(env.deploy_path, 'src')
+    with cd(src_path):
+        run('npm install npm')
+        run('npm install')
+        run('npm run production')
