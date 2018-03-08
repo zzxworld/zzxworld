@@ -11,7 +11,7 @@
             <div class="panel-body">
                 <div class="row">
                 @foreach ($commands as $command)
-                    <div class="col-sm-3">
+                    <div class="col-md-3 col-sm-4 col-xs-6">
                         <code><a href="{{ url('linux/commands/'.$command->name) }}">{{ $command->name }}</a></code>
                         <p>{{ $command->effect }}</p>
                     </div>
