@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <title>@yield('title', config('app.name', 'Laravel'))</title>
-<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+<link href="{{ asset('css/note.css') }}" rel="stylesheet">
 <link rel="canonical" href="{{ Request::url() }}">
 </head>
 <body>
@@ -34,15 +34,6 @@
                             <li><a rel="nofollow" href="{{ route('login') }}">登录</a></li>
                             <li><a rel="nofollow" href="{{ route('register') }}">注册</a></li>
                         @else
-
-                            @can('create', App\Models\Post::class)
-                            <li><a href="{{ route('posts.create') }}">新增文章</a></li>
-                            @endcan
-
-                            @can('view', App\Models\Post::class)
-                            <li><a href="{{ route('comments.index') }}">评论管理</a></li>
-                            @endcan
-
                             <li class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
                                     {{ Auth::user()->name }}
@@ -71,21 +62,10 @@
             </div>
         </nav>
 
-        @if ($errors->any())
-            <div class="container">
-                <div class="alert alert-warning">
-                @foreach ($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach
-                </div>
-            </div>
-        @endif
-
         @yield('content')
     </div>
 
-    <script src="{{ asset('js/app.js') }}"></script>
-    @stack('js')
+    <script src="{{ asset('js/note.js') }}"></script>
 
     <!-- This page took {{ microtime(true) - LARAVEL_START }} seconds to display. -->
 </body>

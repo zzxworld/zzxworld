@@ -24,3 +24,5 @@ Route::resource('linux/commands', 'LinuxCommandController');
 Route::post('linux/commands/{command}/comments', 'LinuxCommandController@storeComment');
 
 Route::resource('comments', 'CommentController');
+
+Route::resource('notes', 'NoteController');
