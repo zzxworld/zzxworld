@@ -5,6 +5,24 @@
 @section('content')
     <div class="container">
         <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Linux 命令</h2>
+            </div>
+            <div class="row">
+                @foreach ($linuxCommands as $command)
+                    <div class="col-md-3 col-sm-4 col-xs-6">
+                        <div class="linux-command">
+                            <h4><a href="{{ url('linux/commands/'.$command->name) }}">{{ $command->name }}</a></h4>
+                            <p>{{ $command->effect }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">最新文章</h2>
+            </div>
             <ul class="list-group">
                 @foreach ($posts as $post)
                     <li class="list-group-item">
