@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <div class="panel panel-default" id="editor-container">
-            <textarea class="editor" @input="autoSave"></textarea>
+            <textarea class="editor" v-model="note.content"></textarea>
         </div>
     </div>
 @endsection
