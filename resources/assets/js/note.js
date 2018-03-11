@@ -52,13 +52,18 @@ var app = new Vue({
                 success: function (response) {
                     if (response.message == 'ok') {
                         app.note.id = response.note.id;
+                        app.saveToLocal();
                     }
                 }
             });
         },
 
-        autoSave: _.debounce(function () {
+        saveToLocal: function () {
             localStorage.setItem('note_draft', JSON.stringify(this.note));
+        },
+
+        autoSave: _.debounce(function () {
+            this.saveToLocal();
         }, 1500),
     },
 
