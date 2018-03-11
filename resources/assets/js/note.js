@@ -36,12 +36,23 @@ var app = new Vue({
         }, 100),
 
         save: function () {
+            var app = this;
+            var url = '/notes';
+            var method = 'post';
+
+            if (this.note.id) {
+                url += '/'+this.note.id;
+                method = 'put';
+            }
+
             $.ajax({
-                url: '/notes',
-                method: 'post',
+                url: url,
+                method: method,
                 data: JSON.stringify(this.note),
                 success: function (response) {
-                    console.log(response);
+                    if (response.message == 'ok') {
+                        app.note.id = response.note.id;
+                    }
                 }
             });
         },

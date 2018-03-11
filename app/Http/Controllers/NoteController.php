@@ -23,6 +23,19 @@ class NoteController extends Controller
         $note->save();
         $note->saveText($request->input('content'));
 
-        return ['message' => 'ok'];
+        return [
+            'message' => 'ok',
+            'note' => $note,
+        ];
+    }
+
+    public function update(Request $request, Note $note)
+    {
+        $note->saveText($request->input('content'));
+
+        return [
+            'message' => 'ok',
+            'note' => $note,
+        ];
     }
 }
