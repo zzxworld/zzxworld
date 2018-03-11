@@ -5,7 +5,13 @@
 @section('content')
     <div class="container">
         <div class="content-header">
-            <button class="btn btn-primary" @click="save">保存</button>
+            @guest
+
+            @else
+                <button class="btn btn-primary" type="button" @click="save">保存</button>
+            @endguest
+
+            <button class="btn btn-default" type="button">预览</button>
         </div>
         <div class="panel panel-default" id="editor-container">
             <textarea class="editor" v-model="note.content"></textarea>

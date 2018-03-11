@@ -14,6 +14,8 @@ class NoteController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create', Note::class);
+
         $this->validate($request, [
             'content' => 'required',
         ]);
@@ -31,6 +33,8 @@ class NoteController extends Controller
 
     public function update(Request $request, Note $note)
     {
+        $this->authorize('update', $note);
+
         $note->saveText($request->input('content'));
 
         return [
