@@ -20,22 +20,21 @@ class NewsFeed extends Model
      */
     public function fetch()
     {
-        // $response = Requests::get($this->url);
-        // var_dump(simplexml_load_string($response->body));
+        $response = Requests::get($this->url);
 
-        $xml = simplexml_load_string(file_get_contents('/Users/zzxworld/Desktop/feed.xml'));
+        $xml = simplexml_load_string($response->body);
         if ($xml->getName() == 'rss') {
-            return static::parseRSS($xml);
+            $items = static::parseRSS($xml);
+        } else {
+            $items = collect();
         }
-    }
 
-    /**
-     * 获取并保存新闻源数据
-     */
-    public function fetchAndSave()
-    {
-        $items = (array) $this->fetch();
-        $this->posts()->createMany($items);
+        $items = $items->map(function ($rs) {
+            $rs['sign'] = md5($rs['url']);
+            return $rs;
+        });
+
+        return $items;
     }
 
     /**
@@ -59,5 +58,18 @@ class NewsFeed extends Model
         }
 
         return $data;
+    }
+
+    /**
+     * 获取并保存新闻源数据
+     */
+    public function fetchAndSave()
+    {
+        $items = $this->fetch();
+        $exists = $this->posts()->whereIn('sign', $items->pluck('sign'))->pluck('sign');
+        $items = $items->whereNotIn('sign', $exists);
+        if ($items->count()) {
+            $this->posts()->createMany($items->toArray());
+        }
     }
 }
