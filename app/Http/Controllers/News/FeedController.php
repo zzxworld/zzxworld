@@ -24,7 +24,7 @@ class FeedController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate([
+        $this->validate($request, [
             'name' => 'required',
             'url' => 'required|url',
         ]);
