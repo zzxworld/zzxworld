@@ -19,6 +19,8 @@ class CreateNewsPostsTable extends Migration
             $table->string('title')->comment('新闻标题');
             $table->string('url')->comment('新闻地址');
             $table->timestamps();
+
+            $table->index(['news_feed_id']);
         });
     }
 
