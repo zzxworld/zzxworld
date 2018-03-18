@@ -51,10 +51,10 @@ class FeedController extends Controller
         return redirect('news/feeds');
     }
 
-    public function destory(NewsFeed $feed)
+    public function destroy(NewsFeed $feed)
     {
-        $feed->destroy();
+        $feed->delete();
 
-        return redirect('news/feeds');
+        return ['message' => 'ok'];
     }
 }
