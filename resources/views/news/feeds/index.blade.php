@@ -14,12 +14,20 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Name</th>
+                        <th>URL</th>
+                        <th>Updated</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($feeds as $feed)
                     <tr>
-                        <td></td>
+                        <td>{{ $feed->id }}</td>
+                        <td>{{ $feed->name }}</td>
+                        <td>{{ $feed->url }}</td>
+                        <td>{{ $feed->updated_at->format('Y-m-d H:i:s') }}</td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
