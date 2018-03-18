@@ -39,6 +39,18 @@ class FeedController extends Controller
         return view('news.feeds.edit', ['feed' => $feed]);
     }
 
+    public function update(NewsFeed $feed, Request $request)
+    {
+        $this->validate([
+            'name' => 'required',
+            'url' => 'required|url',
+        ]);
+
+        $feed->update($request->all());
+
+        return redirect('news/feeds');
+    }
+
     public function destory(NewsFeed $feed)
     {
         $feed->destroy();
