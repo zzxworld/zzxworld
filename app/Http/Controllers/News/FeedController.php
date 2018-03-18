@@ -41,7 +41,7 @@ class FeedController extends Controller
 
     public function update(NewsFeed $feed, Request $request)
     {
-        $this->validate([
+        $this->validate($request, [
             'name' => 'required',
             'url' => 'required|url',
         ]);
