@@ -25,6 +25,7 @@
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <ul class="nav navbar-nav">
+                        <li><a href="{{ url('news') }}">头条</a></li>
                         <li><a href="{{ url('posts') }}">文章</a></li>
                         <li><a href="{{ url('linux/commands') }}">Linux 命令</a></li>
                         <li><a href="{{ url('notes') }}">笔记</a></li>
