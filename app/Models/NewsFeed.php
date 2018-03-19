@@ -68,8 +68,13 @@ class NewsFeed extends Model
         $items = $this->fetch();
         $exists = $this->posts()->whereIn('sign', $items->pluck('sign'))->pluck('sign');
         $items = $items->whereNotIn('sign', $exists);
-        if ($items->count()) {
-            $this->posts()->createMany($items->toArray());
+
+        foreach ($items as $rs) {
+            $rs['news_feed_id'] = $this->id;
+            $post = NewsPost::create($rs);
+            if ($post) {
+                $post->saveText($rs['description']);
+            }
         }
     }
 }
