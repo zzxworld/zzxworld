@@ -22,7 +22,7 @@
             </div>
             @if ($post->source_url)
             <div class="panel-footer">
-                本文来源: <a href="{{ $post->source_url }}" rel="external nofollow" target="_blank">{{ $post->source_url_domain }}</a>
+                本文来源: <a rel="external nofollow" target="_blank" href="{{ $post->source_url }}">{{ $post->source_url_domain }}</a>
             </div>
             @endif
         </div>
