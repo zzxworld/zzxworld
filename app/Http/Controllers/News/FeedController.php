@@ -10,6 +10,8 @@ class FeedController extends Controller
 {
     public function index()
     {
+        $this->authorize('view', NewsFeed::class);
+
         $feeds = NewsFeed::orderBy('updated_at', 'desc')->get();
 
         return view('news.feeds.index', ['feeds' => $feeds]);
@@ -17,6 +19,8 @@ class FeedController extends Controller
 
     public function create()
     {
+        $this->authorize('create', NewsFeed::class);
+
         $feed = new NewsFeed;
 
         return view('news.feeds.create', ['feed' => $feed]);
@@ -24,6 +28,8 @@ class FeedController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create', NewsFeed::class);
+
         $this->validate($request, [
             'name' => 'required',
             'url' => 'required|url',
@@ -36,11 +42,15 @@ class FeedController extends Controller
 
     public function edit(NewsFeed $feed)
     {
+        $this->authorize('update', $feed);
+
         return view('news.feeds.edit', ['feed' => $feed]);
     }
 
     public function update(NewsFeed $feed, Request $request)
     {
+        $this->authorize('update', $feed);
+
         $this->validate($request, [
             'name' => 'required',
             'url' => 'required|url',
@@ -53,6 +63,8 @@ class FeedController extends Controller
 
     public function destroy(NewsFeed $feed)
     {
+        $this->authorize('delete', $feed);
+
         $feed->delete();
 
         return ['message' => 'ok'];
