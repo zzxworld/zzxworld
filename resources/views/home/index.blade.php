@@ -19,18 +19,33 @@
                 @endforeach
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h2 class="panel-title">最新文章</h2>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h2 class="panel-title">头条</h2></div>
+                    <ul class="list-group">
+                        @foreach ($news as $post)
+                            <li class="list-group-item">
+                                <a href="{{ url('posts/'.$post->id) }}">{{ $post->title }}</a>
+                                <span>{{ $post->created_at->format('Y-m-d') }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
-            <ul class="list-group">
-                @foreach ($posts as $post)
-                    <li class="list-group-item">
-                        <a href="{{ url('posts/'.$post->id) }}">{{ $post->title }}</a>
-                        <span>{{ $post->published_at->format('Y-m-d') }}</span>
-                    </li>
-                @endforeach
-            </ul>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h2 class="panel-title">文章</h2></div>
+                    <ul class="list-group">
+                        @foreach ($posts as $post)
+                            <li class="list-group-item">
+                                <a href="{{ url('posts/'.$post->id) }}">{{ $post->title }}</a>
+                                <span>{{ $post->published_at->format('Y-m-d') }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
