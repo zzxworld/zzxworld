@@ -21,7 +21,7 @@ class Post extends Model
     public function getHtmlAttribute()
     {
         $content = Parsedown::instance()->text($this->text);
-        $content = preg_replace('/href="(http.+)"/i', 'rel="external nofollow" target="_blank" href="\1"', $content);
+        $content = preg_replace('/href="(http.+)"/iU', 'rel="external nofollow" target="_blank" href="\1"', $content);
         return $content;
     }
 
