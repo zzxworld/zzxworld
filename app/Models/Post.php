@@ -20,7 +20,9 @@ class Post extends Model
      */
     public function getHtmlAttribute()
     {
-        return Parsedown::instance()->text($this->text);
+        $content = Parsedown::instance()->text($this->text);
+        $content = preg_replace('/href="(http.+)"/i', 'rel="external nofollow" target="_blank" href="\1"', $content);
+        return $content;
     }
 
     /**
