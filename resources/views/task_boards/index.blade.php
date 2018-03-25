@@ -29,6 +29,7 @@
             <div class="container">
                 <ul>
                     <li><a href="javascript:;" @click="openHelpWindow=true">使用帮助</a></li>
+                    <li><a href="/">zzxworld</a></li>
                 </ul>
             </div>
         </footer>
