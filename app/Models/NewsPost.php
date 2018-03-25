@@ -19,7 +19,7 @@ class NewsPost extends Model
     {
         $content = $this->text;
 
-        $content = preg_replace('/href="(.+)"/i', 'rel="external nofollow" target="_blank" href="\1"', $content);
+        $content = preg_replace('/href="(.+)"/iU', 'rel="external nofollow" target="_blank" href="\1"', $content);
 
         return $content;
     }
