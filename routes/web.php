@@ -25,9 +25,10 @@ Route::post('linux/commands/{command}/comments', 'LinuxCommandController@storeCo
 
 Route::resource('comments', 'CommentController');
 
-Route::resource('notes', 'NoteController');
-
 Route::resource('news/feeds', 'News\FeedController');
 Route::resource('news', 'News\PostController');
 
 Route::resource('task_boards', 'TaskBoardController');
+
+Route::resource('notebooks', 'NotebookController');
+

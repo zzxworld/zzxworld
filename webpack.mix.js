@@ -11,8 +11,8 @@ let mix = require('laravel-mix');
  |
  */
 
-let jsResources = ['app', 'notes', 'task_boards'];
-let cssResources = ['app', 'notes', 'task_boards'];
+let jsResources = ['app', 'notebooks', 'task_boards'];
+let cssResources = ['app', 'notebooks', 'task_boards'];
 
 jsResources.forEach(function (name) {
     mix.js('resources/assets/js/'+name+'.js', 'public/js');

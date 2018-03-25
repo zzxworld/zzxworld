@@ -7,11 +7,17 @@ use App\Models\Note;
 
 class NoteController extends Controller
 {
+    /**
+     * 笔记列表
+     */
     public function index()
     {
-        return view('notes.index');
+        $this->authorize('view', Note::class);
     }
 
+    /**
+     * 创建笔记
+     */
     public function store(Request $request)
     {
         $this->authorize('create', Note::class);
@@ -31,6 +37,9 @@ class NoteController extends Controller
         ];
     }
 
+    /**
+     * 更新笔记
+     */
     public function update(Request $request, Note $note)
     {
         $this->authorize('update', $note);

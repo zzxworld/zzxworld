@@ -11,9 +11,9 @@
 @endsection
 
 @push('head')
-    <link href="{{ asset('css/notes.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/notebooks.css') }}" rel="stylesheet">
 @endpush
 
 @push('bottom')
-    <script src="{{ asset('js/notes.js') }}"></script>
+    <script src="{{ asset('js/notebooks.js') }}"></script>
 @endpush
