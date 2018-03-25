@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<title>任务板 - zzxworld</title>
-<link href="{{ asset('css/task_boards.css') }}" rel="stylesheet">
-<link rel="canonical" href="{{ Request::url() }}">
-</head>
-<body>
+@extends('layouts.base')
+@section('title', '任务板 - zzxworld')
+
+@push('head')
+    <link href="{{ asset('css/task_boards.css') }}" rel="stylesheet">
+@endpush
+
+@section('content')
     <div id="app">
         <div class="container">
             <v-new-task @add="add"></v-new-task>
@@ -42,7 +38,8 @@
             </ul>
         </v-window>
     </div>
+@endsection
 
+@push('bottom')
     <script src="{{ asset('js/task_boards.js') }}"></script>
-</body>
-</html>
+@endpush

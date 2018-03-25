@@ -14,7 +14,7 @@ $.ajaxSetup({
 });
 
 var app = new Vue({
-    el: '#app-page',
+    el: '#app',
 
     data: {
         note: {
