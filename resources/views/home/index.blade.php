@@ -26,7 +26,7 @@
                     <ul class="list-group">
                         @foreach ($news as $post)
                             <li class="list-group-item">
-                                <a href="{{ url('posts/'.$post->id) }}">{{ $post->title }}</a>
+                                <a href="{{ url('news/'.$post->id) }}">{{ $post->title }}</a>
                                 <span>{{ $post->created_at->format('Y-m-d') }}</span>
                             </li>
                         @endforeach
