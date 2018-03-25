@@ -11,7 +11,13 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css')
-   .js('resources/assets/js/note.js', 'public/js')
-   .sass('resources/assets/sass/note.scss', 'public/css');
+let jsResources = ['app', 'note', 'task_boards'];
+let cssResources = ['app', 'note', 'task_boards'];
+
+jsResources.forEach(function (name) {
+    mix.js('resources/assets/js/'+name+'.js', 'public/js');
+});
+
+cssResources.forEach(function (name) {
+    mix.sass('resources/assets/sass/'+name+'.scss', 'public/css');
+});
