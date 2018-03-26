@@ -3,9 +3,11 @@
 @section('title', '笔记本 - zzxworld')
 
 @section('content')
-    <div id="app" class="container">
-        <div class="panel panel-default" id="editor-container">
-            <textarea class="editor" v-model="note.content"></textarea>
+    <div id="app">
+        <div class="container">
+            <div class="panel panel-default" id="editor-container">
+                <v-editor></v-editor>
+            </div>
         </div>
     </div>
 @endsection
