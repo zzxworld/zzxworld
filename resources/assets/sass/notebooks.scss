@@ -4,19 +4,102 @@
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
-#editor-container {
-    margin-top: 1em;
+*::-webkit-input-placeholder {
+    color: #DDD;
 }
 
-@media (min-width: $screen-md-min) {
-    #editor-container {
-        margin-top: 2em;
+*:-moz-placeholder {
+    color: #DDD;
+}
+
+*:-ms-input-placeholder {
+    color: #DDD;
+}
+
+html, body, #app {
+    height: 100%;
+}
+
+#app {
+    position: relative;
+}
+
+#notebook-content {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 65px;
+}
+
+#notebook-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 65px;
+    background: #EFEFEF;
+    border-top: 1px solid #DDD;
+
+    nav {
+        padding: 15px 20px;
+    }
+
+    .menu {
+        display: inline-block;
+        color: #000;
+        text-decoration: none;
+        margin-right: 15px;
+    }
+
+    .pull-right {
+        margin-right: 0;
+        margin-left: 15px;
     }
 }
 
 .editor {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
     outline: none;
-    font-size: 1em;
-    padding: 2em;
-    min-height: 300px;
+    resize: none;
+    box-shadow: inset 2px 2px 2px rgba(0,0,0,.075);
+    padding: 20px;
+    font-size: 21px;
+    line-height: 1.6;
+}
+
+@media (min-width: $screen-md-min) {
+    .editor {
+        padding: 40px 80px;
+    }
+
+    #notebook-footer {
+        nav {
+            padding: 15px 80px;
+        }
+    }
+}
+
+.btn-list {
+    ul.dropdown-menu{
+        width: 360px;
+
+        a {
+            white-space: normal;
+        }
+
+        span {
+            color: #999;
+            margin-left: 20px;
+        }
+
+        li {
+            border-bottom: 1px dashed #DDD;
+
+            &:last-child {
+                border-bottom: 0;
+            }
+        }
+    }
 }
