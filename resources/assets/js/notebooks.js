@@ -1,16 +1,21 @@
 import swal from 'sweetalert';
 import Vue from 'vue';
+import * as moment from 'moment';
+import './bootstrap';
 
-require('./bootstrap');
+Vue.component('v-editor', require('./components/Editor'));
+Vue.component('v-notebook-list', require('./notebooks/List'));
 
-Vue.component('v-editor', require('./components/editor'));
+let currentDatetime = function () {
+    return moment().format('YYYY-MM-DD HH:mm:ss');
+}
 
 let defaultNote = function () {
     return {
         id: null,
         content: null,
-        created_at: null,
-        updated_at: null,
+        created_at: currentDatetime(),
+        updated_at: currentDatetime(),
     };
 };
 
@@ -20,22 +25,35 @@ new Vue({
     data: {
         notes: [],
         note: defaultNote(),
+
+        cancelContentWatcher: null,
     },
 
     methods: {
         add: function () {
-            this.notes.unshift(defaultNote());
-            this.note = this.notes[0];
+            this.note = defaultNote();
+            this.notes.unshift(this.note);
         },
 
         select: function (note) {
+            this.cancelContentWatcher();
             this.note = note;
+            this.watchContent();
+        },
+
+        watchContent: function () {
+            let app = this;
+            this.cancelContentWatcher = this.$watch('note.content', function () {
+                app.note.updated_at = currentDatetime();
+            });
         },
     },
 
     mounted: function () {
         if (this.notes.length < 1) {
-            this.add();
+            this.notes.push(this.note);
         }
+
+        this.watchContent();
     }
 });
