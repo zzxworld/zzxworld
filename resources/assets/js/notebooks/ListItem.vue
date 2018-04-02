@@ -27,7 +27,7 @@
                     return '无内容';
                 }
 
-                return this.model.content;
+                return this.model.content.split("\n")[0];
             },
 
             updatedAt: function () {
