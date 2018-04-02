@@ -1,6 +1,9 @@
 <template>
     <li>
-        <a href="javascript:;" @click="select">{{ model.content }}<span>{{ updatedAt }}</span></a>
+        <a href="javascript:;" @click="select">
+            <span class="summary">{{ summary }}</span>
+            <span class="updated-at">{{ updatedAt }}</span>
+        </a>
     </li>
 </template>
 
@@ -19,6 +22,14 @@
         },
 
         computed: {
+            summary: function () {
+                if (!this.model.content) {
+                    return '无内容';
+                }
+
+                return this.model.content;
+            },
+
             updatedAt: function () {
                 var labels = {
                     'year': '年',

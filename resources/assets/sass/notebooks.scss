@@ -85,13 +85,20 @@ html, body, #app {
     ul.dropdown-menu{
         width: 360px;
 
-        a {
-            white-space: normal;
+        span {
+            display: inline-block;
+            vertical-align: bottom;
         }
 
-        span {
+        .summary {
+            width: 80%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .updated-at {
+            float: right;
             color: #999;
-            margin-left: 20px;
         }
 
         li {
