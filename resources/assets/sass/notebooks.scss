@@ -69,18 +69,6 @@ html, body, #app {
     line-height: 1.6;
 }
 
-@media (min-width: $screen-md-min) {
-    .editor {
-        padding: 40px 80px;
-    }
-
-    #notebook-footer {
-        nav {
-            padding: 15px 80px;
-        }
-    }
-}
-
 .btn-list {
     ul.dropdown-menu{
         width: 360px;
@@ -107,6 +95,33 @@ html, body, #app {
             &:last-child {
                 border-bottom: 0;
             }
+        }
+    }
+}
+
+@media (min-width: $screen-md-min) {
+    .editor {
+        padding: 40px 80px;
+    }
+
+    #notebook-footer {
+        nav {
+            padding: 15px 80px;
+        }
+    }
+
+    .btn-list {
+        ul.dropdown-menu{
+            width: 450px;
+        }
+    }
+}
+
+
+@media (min-width: $screen-lg-min) {
+    .btn-list {
+        ul.dropdown-menu{
+            width: 600px;
         }
     }
 }
