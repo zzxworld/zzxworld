@@ -41,15 +41,39 @@ new Vue({
             this.watchContent();
         },
 
+        /**
+         * 从本地加载笔记
+         */
+        loadFromLocal: function () {
+            var notes = localStorage.getItem('notes');
+            if (notes) {
+                this.notes = JSON.parse(notes);
+                this.note = this.notes[0];
+            }
+        },
+
+        /**
+         * 保存笔记到本地
+         */
+        saveToLocal: function () {
+            localStorage.setItem('notes', JSON.stringify(this.notes));
+        },
+
+        /**
+         * 监听笔记内容
+         */
         watchContent: function () {
             let app = this;
             this.cancelContentWatcher = this.$watch('note.content', function () {
+                app.saveToLocal();
                 app.note.updated_at = currentDatetime();
             });
         },
     },
 
     mounted: function () {
+        this.loadFromLocal();
+
         if (this.notes.length < 1) {
             this.notes.push(this.note);
         }
