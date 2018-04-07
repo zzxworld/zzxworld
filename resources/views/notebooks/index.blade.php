@@ -16,6 +16,9 @@
                 <button class="menu btn btn-default" title="新的笔记" @click="add">
                     <span class="glyphicon glyphicon-file"></span>
                 </button>
+                <button class="menu btn btn-default" title="保存到服务端" @click="saveToServer">
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                </button>
             </nav>
         </footer>
     </div>

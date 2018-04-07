@@ -41,6 +41,10 @@ new Vue({
             this.watchContent();
         },
 
+        save: function () {
+            this.saveToLocal();
+        },
+
         /**
          * 从本地加载笔记
          */
@@ -60,13 +64,37 @@ new Vue({
         },
 
         /**
+         * 保存笔记到服务端
+         */
+        saveToServer: function () {
+            var note = this.note;
+            var app = this;
+
+            if (note.id) {
+                axios.put('notes/'+note.id, note).catch(function (error) {
+                    console.log(error);
+                });
+            } else {
+                axios.post('notes', note).then(function (response) {
+                    note.id = response.data.note.id;
+                    app.saveToLocal();
+                }).catch(function (error) {
+                    console.log(error.response.status);
+                });
+            }
+        },
+
+        /**
          * 监听笔记内容
          */
         watchContent: function () {
             let app = this;
             this.cancelContentWatcher = this.$watch('note.content', function () {
-                app.saveToLocal();
+                // 获取当前编辑中的笔记
+                var note = JSON.parse(JSON.stringify(app.note));
+
                 app.note.updated_at = currentDatetime();
+                app.saveToLocal();
             });
         },
     },

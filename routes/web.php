@@ -30,5 +30,6 @@ Route::resource('news', 'News\PostController');
 
 Route::resource('task_boards', 'TaskBoardController');
 
+Route::resource('notes', 'NoteController');
 Route::resource('notebooks', 'NotebookController');
 
