@@ -8,6 +8,15 @@ use App\Models\Note;
 class NoteController extends Controller
 {
     /**
+     * 笔记列表
+     */
+    public function index(Request $request)
+    {
+        $user = $request->user;
+        $this->authorize('view', $user, Note::class);
+    }
+
+    /**
      * 创建笔记
      */
     public function store(Request $request)

@@ -23,6 +23,8 @@ new Vue({
     el: '#notebook',
 
     data: {
+        isLogined: false,
+
         notes: [],
         note: defaultNote(),
 
@@ -43,17 +45,6 @@ new Vue({
 
         save: function () {
             this.saveToLocal();
-        },
-
-        /**
-         * 从本地加载笔记
-         */
-        loadFromLocal: function () {
-            var notes = localStorage.getItem('notes');
-            if (notes) {
-                this.notes = JSON.parse(notes);
-                this.note = this.notes[0];
-            }
         },
 
         /**
@@ -100,12 +91,65 @@ new Vue({
     },
 
     mounted: function () {
-        this.loadFromLocal();
+        let app = this;
+        let name = 'init';
+        let notes = [];
 
-        if (this.notes.length < 1) {
-            this.notes.push(this.note);
-        }
+        $(document).queue(name, function (next) {
 
-        this.watchContent();
+            // 读取本读笔记
+            let notesData = localStorage.getItem('notes');
+            if (notesData) {
+                notes = JSON.parse(notesData);
+            }
+
+            next();
+
+        }).queue(name, function (next) {
+
+            // 提交本地笔记
+            axios.post('notebooks', {
+                notes: notes,
+            }).then(function (response) {
+                app.isLogined = true;
+                next();
+            }).catch(function (error) {
+                next();
+            });
+
+        }).queue(name, function (next) {
+
+            // 如果成功登录时从线上加载笔记
+            if (app.isLogined) {
+                axios.get('notes').then(function (response) {
+                    next();
+                }).catch(function (error) {
+                    next();
+                });
+
+            // 否则使用本地笔记
+            } else {
+                app.notes = notes;
+                next();
+            }
+
+        }).queue(name, function (next) {
+
+            // 没有任何笔记时使用默认空白笔记
+            if (app.notes.length > 0) {
+                app.note = app.notes[0];
+            } else {
+                app.notes.push(app.note);
+            }
+
+            next();
+
+        }).queue(name, function (next) {
+
+            // 监听笔记内容编辑
+            app.watchContent();
+            next();
+
+        }).dequeue(name);
     }
 });
