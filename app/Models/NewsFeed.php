@@ -21,7 +21,10 @@ class NewsFeed extends Model
      */
     public function fetch()
     {
-        $response = Requests::get($this->url);
+        $response = Requests::get($this->url, [], [
+            'timeout' => 60,
+        ]);
+
         $xml = simplexml_load_string($response->body);
         $type = $xml->getName();
 
