@@ -10,7 +10,7 @@ class PostController extends Controller
 {
     public function index(Request $request)
     {
-        $posts = NewsPost::orderBy('updated_at', 'desc')->paginate(50);
+        $posts = NewsPost::orderBy('created_at', 'desc')->paginate(50);
 
         return view('news.posts.index', ['posts' => $posts]);
     }
