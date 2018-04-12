@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Requests;
+use App\Support\RssParser;
 use Carbon\Carbon;
 use Log;
 
@@ -21,22 +21,22 @@ class NewsFeed extends Model
      */
     public function fetch()
     {
-        $response = Requests::get($this->url, [], [
-            'timeout' => 60,
-        ]);
-
-        $xml = simplexml_load_string($response->body);
-        $type = $xml->getName();
-
-        if ($type == 'rss') {
-            $items = static::parseRSS($xml);
-        } else if ($type == 'feed') {
-            $items = static::parseAtom($xml);
-        } else {
-            $items = collect();
+        $data = RssParser::parse($this->url);
+        if (!$data) {
+            return false;
         }
 
+        if (isset($data['rss'])) {
+            $items = static::formatRssData($data);
+        } else {
+            $items = static::formatAtomData($data);
+        }
+
+        $items = collect($items);
+
         $items = $items->map(function ($rs) {
+            $rs['created_at'] = Carbon::parse($rs['created_at']);
+            $rs['updated_at'] = Carbon::parse($rs['updated_at']);
             $rs['sign'] = md5($rs['url']);
             return $rs;
         });
@@ -44,59 +44,49 @@ class NewsFeed extends Model
         return $items;
     }
 
-    /**
-     * 解析 RSS 格式数据
-     */
-    public static function parseRSS(\SimpleXMLElement $xml)
+    public static function formatRssData($data)
     {
-        $data = collect();
-
-        $items = $xml->xpath('channel/item');
-        foreach ($items as $item) {
-            $item = (array) $item;
-
-            $data->push([
-                'title' => array_get($item, 'title'),
-                'url' => array_get($item, 'link'),
-                'created_at' => Carbon::parse(array_get($item, 'pubDate')),
-                'author' => array_get($item, 'author'),
-                'description' => array_get($item, 'description'),
-            ]);
+        $items = array_get($data, 'rss.channel.item');
+        if (!$items) {
+            return [];
         }
 
-        return $data;
+        foreach ($items as $i => $rs) {
+            $items[$i] = [
+                'title' => array_get($rs, 'title'),
+                'url' => array_get($rs, 'link'),
+                'content' => array_get($rs, 'description'),
+                'created_at' => array_get($rs, 'pubDate'),
+                'updated_at' => array_get($rs, 'pubDate'),
+            ];
+        }
+
+        return $items;
     }
 
-    /**
-     * 解析 Atom 格式数据
-     */
-    public static function parseAtom(\SimpleXMLElement $xml)
+    public static function formatAtomData($data)
     {
-        $data = collect();
-
-        $namespace = $xml->getNamespaces();
-        $xml->registerXPathNamespace('c', array_values($namespace)[0]);
-
-        $items = $xml->xpath('//c:entry');
-        foreach ($items as $item) {
-            $createdAt = strtotime((string) $item->published);
-            if (!$createdAt) {
-                continue;
-            }
-
-            $title = (string) $item->title;
-            $url = (string) $item->link->xpath('@href')[0];
-            $content = $item->content->xpath('./*')[0]->asXML();
-
-            $data->push([
-                'title' => $title,
-                'url' => $url,
-                'created_at' => date('Y-m-d H:i:s', $createdAt),
-                'description' => $content,
-            ]);
+        $items = array_get($data, 'feed.entry');
+        if (!$items) {
+            return [];
         }
 
-        return $data;
+        foreach ($items as $i => $rs) {
+            $content = array_get($rs, 'content');
+            if (isset($content['text'])) {
+                $content = $content['text'];
+            }
+
+            $items[$i] = [
+                'title' => array_get($rs, 'title'),
+                'url' => array_get($rs, 'id'),
+                'content' => $content,
+                'created_at' => array_get($rs, 'published'),
+                'updated_at' => array_get($rs, 'updated'),
+            ];
+        }
+
+        return $items;
     }
 
     /**
@@ -116,7 +106,7 @@ class NewsFeed extends Model
 
             $post = NewsPost::create($rs);
             if ($post) {
-                $post->saveText($rs['description']);
+                $post->saveText($rs['content']);
             }
 
             $exists->push($rs['sign']);
