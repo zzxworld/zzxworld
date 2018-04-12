@@ -79,7 +79,7 @@ class NewsFeed extends Model
 
             $items[$i] = [
                 'title' => array_get($rs, 'title'),
-                'url' => array_get($rs, 'id'),
+                'url' => array_get($rs, 'link._attr_href'),
                 'content' => $content,
                 'created_at' => array_get($rs, 'published'),
                 'updated_at' => array_get($rs, 'updated'),
