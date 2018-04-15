@@ -60,11 +60,11 @@ class RssParser
             if ($attributes->count()) {
                 $data = [];
                 foreach ($attributes as $attr) {
-                    $data['_attr_'.$attr->getName()] = (string) $attr;
+                    $data['_attr_'.$attr->getName()] = trim((string) $attr);
                 }
-                $data['text'] = (string) $element;
+                $data['text'] = trim((string) $element);
             } else {
-                $data = (string) $element;
+                $data = trim((string) $element);
             }
 
             return $data;
