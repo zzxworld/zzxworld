@@ -22,7 +22,7 @@ class NoteController extends Controller
         $notes = $notes->map(function ($note) {
             return [
                 'id' => $note->id,
-                'text' => $note->text,
+                'content' => $note->text,
                 'created_at' => $note->created_at->format('Y-m-d H:i:s'),
                 'updated_at' => $note->updated_at->format('Y-m-d H:i:s'),
             ];

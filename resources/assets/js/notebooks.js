@@ -122,6 +122,7 @@ new Vue({
             // 如果成功登录时从线上加载笔记
             if (app.isLogined) {
                 axios.get('notes').then(function (response) {
+                    app.notes = response.data.notes;
                     next();
                 }).catch(function (error) {
                     next();
