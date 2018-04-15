@@ -10,6 +10,11 @@ class NotePolicy
 {
     use HandlesAuthorization;
 
+    public function index(User $user)
+    {
+        return $user->id > 0;
+    }
+
     /**
      * Determine whether the user can view the note.
      *
@@ -19,7 +24,7 @@ class NotePolicy
      */
     public function view(User $user, Note $note)
     {
-        //
+        return $note->user_id == $user->id;
     }
 
     /**
@@ -30,7 +35,7 @@ class NotePolicy
      */
     public function create(User $user)
     {
-        return true;
+        return $user->id > 0;
     }
 
     /**

@@ -12,8 +12,26 @@ class NoteController extends Controller
      */
     public function index(Request $request)
     {
-        $user = $request->user;
-        $this->authorize('view', $user, Note::class);
+        $this->authorize('index', Note::class);
+
+        $notes = Note::with('texts')
+            ->where('user_id', $request->user()->id)
+            ->orderBy('updated_at', 'desc')
+            ->paginate(10);
+
+        $notes = $notes->map(function ($note) {
+            return [
+                'id' => $note->id,
+                'text' => $note->text,
+                'created_at' => $note->created_at->format('Y-m-d H:i:s'),
+                'updated_at' => $note->updated_at->format('Y-m-d H:i:s'),
+            ];
+        });
+
+        return [
+            'message' => 'ok',
+            'notes' => $notes,
+        ];
     }
 
     /**
