@@ -72,13 +72,18 @@ class NewsFeed extends Model
         }
 
         foreach ($items as $i => $rs) {
+            $title = array_get($rs, 'title');
+            if (isset($title['text'])) {
+                $title = $title['text'];
+            }
+
             $content = array_get($rs, 'content');
             if (isset($content['text'])) {
                 $content = $content['text'];
             }
 
             $items[$i] = [
-                'title' => array_get($rs, 'title'),
+                'title' => $title,
                 'url' => array_get($rs, 'link._attr_href'),
                 'content' => $content,
                 'created_at' => array_get($rs, 'published'),
