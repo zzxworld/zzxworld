@@ -21,7 +21,11 @@ class FetchNews extends Command
         }
 
         foreach ($feeds as $feed) {
-            $feed->fetchAndSave();
+            try {
+                $feed->fetchAndSave();
+            } catch (\Exception $e) {
+                continue;
+            }
         }
     }
 }
