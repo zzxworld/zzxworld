@@ -16,6 +16,7 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>URL</th>
+                        <th>News Total</th>
                         <th>Updated</th>
                         <th>Action</th>
                     </tr>
@@ -26,6 +27,7 @@
                         <td>{{ $feed->id }}</td>
                         <td>{{ $feed->name }}</td>
                         <td>{{ $feed->url }}</td>
+                        <td>{{ $feed->posts_count }}</td>
                         <td>{{ $feed->updated_at->format('Y-m-d H:i:s') }}</td>
                         <td>
                             <a href="{{ url('news/feeds/'.$feed->id.'/edit') }}">编辑</a>

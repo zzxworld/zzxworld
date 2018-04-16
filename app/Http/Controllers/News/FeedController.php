@@ -12,7 +12,7 @@ class FeedController extends Controller
     {
         $this->authorize('view', NewsFeed::class);
 
-        $feeds = NewsFeed::orderBy('updated_at', 'desc')->get();
+        $feeds = NewsFeed::orderBy('updated_at', 'desc')->withCount('posts')->get();
 
         return view('news.feeds.index', ['feeds' => $feeds]);
     }
