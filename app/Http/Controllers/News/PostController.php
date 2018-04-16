@@ -10,9 +10,18 @@ class PostController extends Controller
 {
     public function index(Request $request)
     {
-        $posts = NewsPost::orderBy('created_at', 'desc')->paginate(50);
+        $posts = NewsPost::where('is_disabled', false)->orderBy('created_at', 'desc')->paginate(50);
 
         return view('news.posts.index', ['posts' => $posts]);
+    }
+
+    public function update(Request $request, NewsPost $news)
+    {
+        $this->authorize('update', $news);
+
+        $news->update($request->all());
+
+        return ['message' => 'ok'];
     }
 
     public function show(NewsPost $news)

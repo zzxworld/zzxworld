@@ -8,7 +8,7 @@ class NewsPost extends Model
 {
     use \App\Models\Concerns\TextAble;
 
-    protected $fillable = ['news_feed_id', 'sign', 'title', 'url', 'created_at'];
+    protected $fillable = ['news_feed_id', 'is_disabled', 'sign', 'title', 'url', 'created_at'];
 
     public function feed()
     {
