@@ -4,8 +4,14 @@
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
+// Common rule
+@import "common";
+
 // Comment
 @import "comment";
 
 // Linux Commands
 @import "linux_command";
+
+// News
+@import "news/index";

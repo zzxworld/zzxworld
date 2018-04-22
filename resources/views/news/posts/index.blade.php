@@ -11,12 +11,22 @@
             </div>
             <ul class="list-group">
                 @foreach ($posts as $post)
-                    <li class="list-group-item">
+                    <li class="list-group-item news-item">
                         @can('update', $post)
                             <a class="btn-disable btn btn-default btn-xs pull-right" href="javascript:;" data-id="{{ $post->id }}">禁止</a>
                         @endcan
-                        <a rel="nofollow" href="{{ url('news/'.$post->id) }}">{{ $post->title }}</a>
-                        <span>{{ $post->created_at->format('Y-m-d') }}</span>
+
+                        <header>
+                            @if ($post->created_at->isToday())
+                                <span class="label label-text date date-today">{{ $post->created_at->format('Y-m-d') }}</span>
+                            @else
+                                <span class="label label-text date">{{ $post->created_at->format('Y-m-d') }}</span>
+                            @endif
+
+                            <span class="label label-text">{{ $post->feed->name }}</span>
+                        </header>
+
+                        <a class="title" href="{{ url('news/'.$post->id) }}">{{ $post->title }}</a>
                     </li>
                 @endforeach
             </ul>
