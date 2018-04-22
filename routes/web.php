@@ -16,7 +16,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 Route::get('user/sessions/check', 'User\SessionController@check');
 
-Route::resource('tips', 'TipController');
+Route::resource('users', 'User\UserController');
 
 Route::resource('posts', 'PostController');
 Route::post('posts/{post}/comments', 'PostCommentController@store');
@@ -33,4 +33,3 @@ Route::resource('task_boards', 'TaskBoardController');
 
 Route::resource('notes', 'NoteController');
 Route::resource('notebooks', 'NotebookController');
-
