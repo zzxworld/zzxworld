@@ -102,16 +102,13 @@ new Vue({
             if (notesData) {
                 notes = JSON.parse(notesData);
             }
-
             next();
 
         }).queue(name, function (next) {
 
-            // 提交本地笔记
-            axios.post('notebooks', {
-                notes: notes,
-            }).then(function (response) {
-                app.isLogined = true;
+            // 检测用户是否已登录
+            axios.get('user/sessions/check').then(function (response) {
+                app.isLogined = response.data.is_logined;
                 next();
             }).catch(function (error) {
                 next();
@@ -119,28 +116,42 @@ new Vue({
 
         }).queue(name, function (next) {
 
-            // 如果成功登录时从线上加载笔记
-            if (app.isLogined) {
-                axios.get('notes').then(function (response) {
-                    app.notes = response.data.notes;
+            // 提交本地笔记
+            if (app.isLogined == false) {
+                next();
+            } else {
+                axios.post('notebooks', {
+                    notes: notes,
+                }).then(function (response) {
                     next();
                 }).catch(function (error) {
                     next();
                 });
-
-            // 否则使用本地笔记
-            } else {
-                app.notes = notes;
-                next();
             }
 
         }).queue(name, function (next) {
 
-            // 没有任何笔记时使用默认空白笔记
-            if (app.notes.length > 0) {
-                app.note = app.notes[0];
+            // 加载线上笔记
+            if (app.isLogined == false) {
+                next();
             } else {
-                app.notes.push(app.note);
+                axios.get('notes').then(function (response) {
+                    notes = response.data.notes;
+                    app.notes = notes;
+                    app.saveToLocal();
+                    next();
+                }).catch(function (error) {
+                    next();
+                });
+            }
+
+        }).queue(name, function (next) {
+
+            // 设置本地编辑笔记
+            if (notes.length > 0) {
+                app.note = notes[0];
+            } else {
+                notes.push(app.note);
             }
 
             next();

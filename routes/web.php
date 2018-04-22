@@ -14,6 +14,7 @@
 Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
+Route::get('user/sessions/check', 'User\SessionController@check');
 
 Route::resource('tips', 'TipController');
 
