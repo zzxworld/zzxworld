@@ -26,6 +26,9 @@ class PostController extends Controller
 
     public function show(NewsPost $news)
     {
+        if ($news->is_disabled) {
+            abort(404);
+        }
         return view('news.posts.show', ['post' => $news]);
     }
 }
