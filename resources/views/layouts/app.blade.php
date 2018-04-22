@@ -29,6 +29,7 @@
                         <li><a href="{{ url('posts') }}">文章</a></li>
                         <li><a href="{{ url('linux/commands') }}">Linux 命令</a></li>
                         <li><a href="{{ url('task_boards') }}">任务板</a></li>
+                        <li><a href="{{ url('notebooks') }}">笔记本</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         @guest
