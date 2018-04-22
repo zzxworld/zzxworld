@@ -43,6 +43,11 @@ class NotebookController extends Controller
                 $note->created_at = array_get($rs, 'created_at');
                 $note->updated_at = array_get($rs, 'updated_at');
                 $note->save();
+            } else {
+                $updatedAt = array_get($rs, 'updated_at');
+                if ($updatedAt <= $note->updated_at->timestamp) {
+                    continue;
+                }
             }
 
             $note->saveText($content);

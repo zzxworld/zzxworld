@@ -120,7 +120,7 @@ new Vue({
             if (app.isLogined == false) {
                 next();
             } else {
-                axios.post('notebooks', {
+                axios.post('notebooks?nocache='+new Date().getTime(), {
                     notes: notes,
                 }).then(function (response) {
                     next();
