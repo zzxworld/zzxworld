@@ -37,25 +37,28 @@
                             <li><a rel="nofollow" href="{{ route('register') }}">注册</a></li>
                         @else
 
-                            @can('create', App\Models\Post::class)
-                            <li><a href="{{ route('posts.create') }}">新增文章</a></li>
-                            @endcan
-
-                            @can('view', App\Models\Post::class)
-                            <li><a href="{{ route('comments.index') }}">评论管理</a></li>
-                            @endcan
-
                             <li class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
                                     {{ Auth::user()->name }}
                                     @if (Auth::user()->isRoot)
                                         <span class="label label-danger">MOD</span>
                                     @endif
-                                    <span></span>
                                     <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu">
+                                    @can('create', App\Models\Post::class)
+                                    <li><a href="{{ route('posts.create') }}">新增文章</a></li>
+                                    @endcan
+
+                                    @can('update', App\Models\Comment::class)
+                                    <li><a href="{{ route('comments.index') }}">评论管理</a></li>
+                                    @endcan
+
+                                    @can('create', App\Models\NewsFeed::class)
+                                    <li><a href="{{ route('feeds.index') }}">头条数据源</a></li>
+                                    @endcan
+                                    <li role="separator" class="divider"></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
