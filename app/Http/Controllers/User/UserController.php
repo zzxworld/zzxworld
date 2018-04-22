@@ -10,6 +10,8 @@ class UserController extends Controller
 {
     public function index()
     {
+        $this->authorize('view', User::class);
+
         $users = User::paginate(50);
 
         return view('user.index', [

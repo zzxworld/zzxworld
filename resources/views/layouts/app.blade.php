@@ -47,7 +47,10 @@
                                 </a>
 
                                 <ul class="dropdown-menu">
+                                    @can('view', App\Models\User::class)
                                     <li><a href="{{ route('users.index') }}">注册用户</a></li>
+                                    @endcan
+
                                     @can('create', App\Models\Post::class)
                                     <li><a href="{{ route('posts.create') }}">新增文章</a></li>
                                     @endcan

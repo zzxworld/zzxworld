@@ -3,21 +3,18 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Tip;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class TipPolicy
+class UserPolicy
 {
     use HandlesAuthorization;
 
     public function before(User $user)
     {
-        if ($user->isRoot) {
-            return true;
-        }
+        return $user->isRoot;
     }
 
-    public function view(User $user, Tip $tip)
+    public function view(User $user)
     {
     }
 
@@ -26,11 +23,11 @@ class TipPolicy
         return $user->id > 0;
     }
 
-    public function update(User $user, Tip $tip)
+    public function update(User $user)
     {
     }
 
-    public function delete(User $user, Tip $tip)
+    public function delete(User $user)
     {
     }
 }
