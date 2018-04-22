@@ -12,7 +12,7 @@
             </div>
             <div class="panel-body">{!! $post->content !!}</div>
             <div class="panel-footer">
-                <span>来源: <a rel="external nofollow" target="_blank" href="{{ $post->url }}">{{ $post->feed->name }}</a></span>
+                <span>来源: <a rel="external nofollow" target="_blank" href="{{ $post->url }}">{{ $post->feed ? $post->feed->name : $post->url }}</a></span>
             </div>
         </div>
     </div>

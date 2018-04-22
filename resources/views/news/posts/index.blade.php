@@ -23,7 +23,9 @@
                                 <span class="label label-text date">{{ $post->created_at->format('Y-m-d') }}</span>
                             @endif
 
+                            @if ($post->feed)
                             <span class="label label-text">{{ $post->feed->name }}</span>
+                            @endif
                         </header>
 
                         <a class="title" href="{{ url('news/'.$post->id) }}">{{ $post->title }}</a>
