@@ -12,7 +12,7 @@
                 @foreach ($linuxCommands as $command)
                     <div class="col-md-3 col-sm-4 col-xs-6">
                         <div class="linux-command">
-                            <h4><a href="{{ url('linux/commands/'.$command->name) }}">{{ $command->name }}</a></h4>
+                            <h4><a rel="nofollow" href="{{ url('linux/commands/'.$command->name) }}">{{ $command->name }}</a></h4>
                             <p>{{ $command->effect }}</p>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                     <ul class="list-group">
                         @foreach ($news as $post)
                             <li class="list-group-item">
-                                <a href="{{ url('news/'.$post->id) }}">{{ $post->title }}</a>
+                                <a rel="nofollow" href="{{ url('news/'.$post->id) }}">{{ $post->title }}</a>
                                 <span>{{ $post->created_at->format('Y-m-d') }}</span>
                             </li>
                         @endforeach
@@ -39,7 +39,7 @@
                     <ul class="list-group">
                         @foreach ($posts as $post)
                             <li class="list-group-item">
-                                <a href="{{ url('posts/'.$post->id) }}">{{ $post->title }}</a>
+                                <a rel="nofollow" href="{{ url('posts/'.$post->id) }}">{{ $post->title }}</a>
                                 <span>{{ $post->published_at->format('Y-m-d') }}</span>
                             </li>
                         @endforeach
