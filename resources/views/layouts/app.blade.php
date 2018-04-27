@@ -8,6 +8,7 @@
 <title>@yield('title', config('app.name', 'Laravel'))</title>
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <link rel="canonical" href="{{ Request::url() }}">
+@stack('css')
 </head>
 <body>
     <div id="app-page">
