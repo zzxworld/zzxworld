@@ -11,11 +11,12 @@ npm-debug.log
 yarn-error.log
 .env
 
-*.pyc
-fabfile.py
 public/js/
 public/css/
 public/fonts/
 public/mix-manifest.json
 app/Console/Commands/Test.php
 .DS_Store
+
+/*.pyc
+/fabfile.py
