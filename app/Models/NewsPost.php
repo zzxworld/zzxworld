@@ -11,6 +11,9 @@ class NewsPost extends Model
 {
     use \App\Models\Concerns\TextAble;
 
+    // 多态关系名称
+    const MORPH_NAME = 'NP';
+
     protected $fillable = ['news_feed_id', 'is_disabled', 'sign', 'title', 'url', 'created_at'];
 
     public function feed()
@@ -59,5 +62,15 @@ class NewsPost extends Model
         }
 
         $this->keywords()->sync($keywordIds);
+    }
+
+    /**
+     * 获取所有关键词总数
+     */
+    public static function getKeywordTotal()
+    {
+        return (int) DB::table('keywordables')
+            ->where('keywordable_type', static::MORPH_NAME)
+            ->sum('keyword_total');
     }
 }

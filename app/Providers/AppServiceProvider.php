@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
         Relation::morphMap([
             '01' => 'App\Models\Post',
             '02' => 'App\Models\Note',
-            '03' => 'App\Models\NewsPost',
+            \App\Models\NewsPost::MORPH_NAME => 'App\Models\NewsPost',
             '04' => 'App\Models\Comment',
             '05' => 'App\Models\LinuxCommand',
         ]);
