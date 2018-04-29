@@ -1,26 +1,39 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import Flask
-from flask import jsonify
-from flask import request
+from tornado import ioloop
+from tornado import web
+from tornado import escape
 import jieba
 
-app = Flask(__name__)
+class HomeController(web.RequestHandler):
+    def get(self):
+        self.set_header('Content-type', 'application/json;charset=utf-8');
+        self.write(escape.json_encode({
+            'message': 'ok',
+            'text': 'Segment Word Service.',
+        }))
 
-@app.route('/')
-def index():
-    return jsonify({
-        'message': 'ok',
-        'name': 'segment word services.',
-        })
+class SegmentController(web.RequestHandler):
+    def post(self):
+        self.set_header('Content-type', 'application/json;charset=utf-8');
+        text = self.get_body_argument('text')
+        words = jieba.cut(text)
+        self.write(escape.json_encode({
+            'message': 'ok',
+            'words': [word for word in words if len(word)>1],
+        }))
 
+def makeApp():
+    return web.Application([
+        (r'/', HomeController),
+        (r'/segment', SegmentController),
+    ])
 
-@app.route('/segment', methods=['POST'])
-def segment():
-    text = request.form['text']
-    words = jieba.cut(text)
-    return jsonify({
-        'message': 'ok',
-        'words': [word for word in words if len(word)>1],
-        })
+def main():
+    app  = makeApp()
+    app.listen(8181)
+    ioloop.IOLoop.current().start()
+
+if __name__ == "__main__":
+    main()

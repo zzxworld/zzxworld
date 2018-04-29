@@ -8,7 +8,7 @@ def install():
     local('venv/bin/pip install -r requirements.txt')
 
 def dev():
-    local('FLASK_ENV=development FLASK_APP=app.py venv/bin/flask run --port=8181')
+    local('venv/bin/python app.py')
 
 def test():
     local('curl -X POST -d \'text="It was happily mapped to the Spring controller"\' 127.0.0.1:8181/segment')
