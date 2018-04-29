@@ -97,6 +97,8 @@
     <script src="{{ asset('js/app.js') }}"></script>
     @stack('js')
 
+    @if (defined('LARAVEL_START'))
     <!-- This page took {{ microtime(true) - LARAVEL_START }} seconds to display. -->
+    @endif
 </body>
 </html>
