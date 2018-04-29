@@ -27,7 +27,9 @@ class SegmentWord
      */
     public static function formatText(string $text)
     {
+        $text = preg_replace('/<pre.*?>[\s\S]*<\/pre>/iU', ' ', $text);
         $text = strip_tags($text);
+        $text = preg_replace('/&.+?;/', ' ', $text);
 
         return $text;
     }
