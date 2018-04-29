@@ -85,7 +85,7 @@ class NewsPost extends Model
             $postKeywordCounts[$rs->keyword_id] = $rs->total;
         }
 
-        $keywords = $this->keywords;
+        $keywords = $this->keywords()->where('is_empty', false)->get();
         foreach ($keywords as $keyword) {
             $keyword->post_total = $postKeywordTotal;
             $keyword->in_post_total = $keyword->pivot->keyword_total;
