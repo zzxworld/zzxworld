@@ -65,32 +65,6 @@ class NewsPost extends Model
     }
 
     /**
-     * 获取指定关键词词频
-     */
-    public function getTFWith(Keyword $keyword)
-    {
-        $total = $this->keywords->map(function ($rs) {
-            return $rs->pivot->keyword_total;
-        })->sum();
-
-        return $keyword->pivot->keyword_total/$total;
-    }
-
-    /**
-     * 获取指定关键词反向文档词频
-     */
-    public function getIDFWith(Keyword $keyword)
-    {
-        $total = static::count();
-        $keywordTotal = DB::table('keywordables')
-            ->where('keywordable_type', static::MORPH_NAME)
-            ->where('keyword_id', $keyword->id)
-            ->count();
-
-        return log($total/($keywordTotal+1));
-    }
-
-    /**
      * 获取包含权重数据的关键词
      */
     public function getKeywordsWithTFIDF($limit=0)

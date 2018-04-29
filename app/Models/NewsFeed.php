@@ -112,6 +112,7 @@ class NewsFeed extends Model
             $post = NewsPost::create($rs);
             if ($post) {
                 $post->saveText($rs['content']);
+                $post->updateWords();
             }
 
             $exists->push($rs['sign']);
