@@ -10,6 +10,8 @@ class Post extends Model
     use \App\Models\Concerns\TextAble;
     use \App\Models\Concerns\CommentAble;
 
+    const MORPH_NAME = 'PO';
+
     protected $fillable = ['title', 'source_url'];
     protected $casts = [
         'published_at' => 'datetime',

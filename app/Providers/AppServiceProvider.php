@@ -15,11 +15,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Relation::morphMap([
-            '01' => 'App\Models\Post',
-            '02' => 'App\Models\Note',
+            \App\Models\Post::MORPH_NAME => 'App\Models\Post',
+            \App\Models\Note::MORPH_NAME => 'App\Models\Note',
             \App\Models\NewsPost::MORPH_NAME => 'App\Models\NewsPost',
-            '04' => 'App\Models\Comment',
-            '05' => 'App\Models\LinuxCommand',
+            \App\Models\Comment::MORPH_NAME => 'App\Models\Comment',
+            \APP\Models\LinuxCommand::MORPH_NAME => 'App\Models\LinuxCommand',
         ]);
     }
 
