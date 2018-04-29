@@ -23,7 +23,7 @@ class NewsPost extends Model
 
     public function keywords()
     {
-        return $this->morphToMany('App\Models\Keyword', 'keywordable')->withPivot('tf', 'idf');
+        return $this->morphToMany('App\Models\Keyword', 'keywordable')->withPivot('keyword_total');
     }
 
     public function getContentAttribute()
@@ -65,12 +65,66 @@ class NewsPost extends Model
     }
 
     /**
-     * 获取所有关键词总数
+     * 获取指定关键词词频
      */
-    public static function getKeywordTotal()
+    public function getTFWith(Keyword $keyword)
     {
-        return (int) DB::table('keywordables')
+        $total = $this->keywords->map(function ($rs) {
+            return $rs->pivot->keyword_total;
+        })->sum();
+
+        return $keyword->pivot->keyword_total/$total;
+    }
+
+    /**
+     * 获取指定关键词反向文档词频
+     */
+    public function getIDFWith(Keyword $keyword)
+    {
+        $total = static::count();
+        $keywordTotal = DB::table('keywordables')
             ->where('keywordable_type', static::MORPH_NAME)
-            ->sum('keyword_total');
+            ->where('keyword_id', $keyword->id)
+            ->count();
+
+        return log($total/($keywordTotal+1));
+    }
+
+    /**
+     * 获取包含权重数据的关键词
+     */
+    public function getKeywordsWithTFIDF($limit=0)
+    {
+        $documentTotal = static::count();
+        $postKeywordTotal =  $this->keywords->map(function ($rs) {
+            return $rs->pivot->keyword_total;
+        })->sum();
+
+        $postKeywordCounts = [];
+        $result = DB::table('keywordables')
+            ->select(DB::raw('keyword_id, count(id) as total'))
+            ->where('keywordable_type', static::MORPH_NAME)
+            ->whereIn('keyword_id', $this->keywords->map(function ($rs) {
+                return $rs->id;
+            }))->groupBy('keyword_id')->get();
+        foreach ($result as $rs) {
+            $postKeywordCounts[$rs->keyword_id] = $rs->total;
+        }
+
+        $keywords = $this->keywords;
+        foreach ($keywords as $keyword) {
+            $keyword->post_total = $postKeywordTotal;
+            $keyword->in_post_total = $keyword->pivot->keyword_total;
+            $keyword->document_total = $documentTotal;
+            $keyword->in_document_total = $postKeywordCounts[$keyword->id];
+        }
+
+        $keywords = $keywords->sortByDesc('tfidf');
+
+        if($limit > 0) {
+            $keywords = $keywords->slice(0, $limit);
+        }
+
+        return $keywords;
     }
 }
