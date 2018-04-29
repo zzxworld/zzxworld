@@ -17,6 +17,7 @@ class CreateKeywordsTable extends Migration
             $table->increments('id');
             $table->string('text')->comment('关键词文本');
             $table->boolean('is_manual')->default(false)->comment('是否为手动添加');
+            $table->boolean('is_empty')->default(false)->comment('是否为无意义');
             $table->timestamps();
 
             $table->unique('text');
