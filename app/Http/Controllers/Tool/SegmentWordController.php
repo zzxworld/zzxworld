@@ -20,24 +20,7 @@ class SegmentWordController extends Controller
         ]);
 
         $words = SegmentWord::dispose($request->input('text'));
-
-        $words = array_count_values($words);
-        $words = array_map(function ($key, $value) {
-            return [
-                'text' => $key,
-                'count' => $value,
-            ];
-        }, array_keys($words), array_values($words));
-
-        usort($words, function ($a, $b) {
-            if ($a['count'] > $b['count']) {
-                return -1;
-            } else if ($a['count'] == $b['count']) {
-                return 0;
-            } else {
-                return 1;
-            }
-        });
+        $words = SegmentWord::analyzeTermFrequency($words);
 
         return [
             'message' => 'ok',
