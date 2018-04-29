@@ -10,7 +10,6 @@ def deploy():
     with cd(src_path):
         run('git checkout master && git pull')
         run('composer install')
-        run('npm run production')
         run('php artisan config:cache')
         run('php artisan cache:clear')
         run('php artisan route:clear')
@@ -32,3 +31,11 @@ def npminstall():
     with cd(src_path):
         run('npm install npm')
         run('npm install')
+
+def npmdeploy():
+    """部署前端
+    """
+    src_path = os.path.join(env.deploy_path, 'src')
+    with cd(src_path):
+        run('git checkout master && git pull')
+        run('npm run production')
