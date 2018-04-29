@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\News;
 
 use Illuminate\Console\Command;
 use App\Models\NewsPost;
 use Log;
 
-class UpdateNewsPostWords extends Command
+class UpdateWords extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'update:news-post-words';
+    protected $signature = 'news:update-words';
 
     /**
      * The console command description.

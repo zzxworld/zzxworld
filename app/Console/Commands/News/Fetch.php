@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\News;
 
 use Illuminate\Console\Command;
 use App\Models\NewsFeed;
 
-class FetchNews extends Command
+class Fetch extends Command
 {
     protected $signature = 'news:fetch {--id=}';
-    protected $description = 'fetch news';
+    protected $description = '抓取新闻';
 
     public function handle()
     {
