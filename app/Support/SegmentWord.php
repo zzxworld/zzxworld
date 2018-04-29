@@ -22,9 +22,19 @@ class SegmentWord
         return static::$url;
     }
 
-    public static function dispose(string $text)
+    /**
+     * 格式化待分词文本
+     */
+    public static function formatText(string $text)
     {
         $text = strip_tags($text);
+
+        return $text;
+    }
+
+    public static function dispose(string $text)
+    {
+        $text = static::formatText($text);
 
         $response = Requests::post(static::getServiceURL(), [
             'timeout' => 10,
