@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
             \App\Models\Note::MORPH_NAME => 'App\Models\Note',
             \App\Models\NewsPost::MORPH_NAME => 'App\Models\NewsPost',
             \App\Models\Comment::MORPH_NAME => 'App\Models\Comment',
-            \APP\Models\LinuxCommand::MORPH_NAME => 'App\Models\LinuxCommand',
+            \App\Models\LinuxCommand::MORPH_NAME => 'App\Models\LinuxCommand',
         ]);
     }
 
