@@ -10,7 +10,7 @@ class Keyword extends Model
 
     public function setTextAttribute($value)
     {
-        $this->attributes['text'] = mb_substr($value, 0, 255);
+        $this->attributes['text'] = mb_substr($value, 0, 63);
     }
 
     public function getTFAttribute()
