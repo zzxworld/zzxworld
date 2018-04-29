@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use DB;
 
-class FetchNews extends Command
+class AppMigrate extends Command
 {
     protected $signature = 'app:migrate';
     protected $description = '迁移应用数据';
