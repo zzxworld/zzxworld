@@ -18,6 +18,8 @@ class CreateKeywordsTable extends Migration
             $table->string('text')->comment('关键词文本');
             $table->boolean('is_manual')->default(false)->comment('是否为手动添加');
             $table->timestamps();
+
+            $table->unique('text');
         });
     }
 

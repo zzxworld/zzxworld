@@ -12,7 +12,7 @@
                 <button class="btn btn-primary" type="button" @click="submit">开始分词</button>
                 <div class="words">
                     <template v-for="word in words">
-                        <span class="label label-default">@{{ word.text }}<i>@{{ word.count }}</i></span>
+                        <span class="label label-default">@{{ word.text }}<i>@{{ word.total }}</i></span>
                     </template>
                 </div>
             </div>

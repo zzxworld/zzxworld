@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Support\SegmentWord;
+use DB;
+use Log;
 
 class NewsPost extends Model
 {
@@ -18,7 +20,7 @@ class NewsPost extends Model
 
     public function keywords()
     {
-        return $this->morphToMany('App\Models\Keyword', 'keywordable');
+        return $this->morphToMany('App\Models\Keyword', 'keywordable')->withPivot('tf', 'idf');
     }
 
     public function getContentAttribute()
@@ -46,18 +48,14 @@ class NewsPost extends Model
      */
     public function updateWords()
     {
-        $words = $this->getWords();
-        $keywords = Keyword::whereIn('text', array_map(function ($word) {
-            return $word['text'];
-        }, $words))->get();
-
         $keywordIds = [];
+        $words = $this->getWords();
         foreach ($words as $word) {
-            $keyword = $keywords->where('text', $word['text'])->first();
+            $keyword = Keyword::where('text', $word['text'])->first();
             if (!$keyword) {
                 $keyword = Keyword::create(['text' => $word['text']]);
             }
-            $keywordIds[$keyword->id] = ['tf' => $word['tf']];
+            $keywordIds[$keyword->id] = ['keyword_total' => $word['total']];
         }
 
         $this->keywords()->sync($keywordIds);

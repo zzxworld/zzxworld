@@ -16,12 +16,13 @@ class CreateKeywordablesTable extends Migration
         Schema::create('keywordables', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('keyword_id')->unsigned()->comment('关键词 ID');
+            $table->integer('keyword_total')->default(0)->comment('关键词总数');
             $table->integer('keywordable_id')->unsigned()->comment('使用关键词模型对象的 ID');
-            $table->string('keywordable_type')->comment('使用关键词模型对象的类型');
-            $table->decimal('tf', 4, 3)->default(0)->comment('关键词频率');
+            $table->char('keywordable_type', 2)->comment('使用关键词模型对象的类型');
             $table->timestamps();
 
-            $table->index('keyword_id');
+            $table->index(['keywordable_id', 'keywordable_type']);
+            $table->index(['keywordable_type', 'keyword_id']);
         });
     }
 

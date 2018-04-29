@@ -24,6 +24,8 @@ class SegmentWord
 
     public static function dispose(string $text)
     {
+        $text = strip_tags($text);
+
         $response = Requests::post(static::getServiceURL(), [
             'timeout' => 10,
         ], ['text' => $text]);
@@ -42,20 +44,18 @@ class SegmentWord
      */
     public static function analyzeTermFrequency(array $words)
     {
-        $total = count($words);
         $words = array_count_values($words);
-        $words = array_map(function ($key, $value) use ($total) {
+        $words = array_map(function ($key, $value) {
             return [
                 'text' => $key,
-                'count' => $value,
-                'tf' => $value / $total,
+                'total' => $value,
             ];
         }, array_keys($words), array_values($words));
 
         usort($words, function ($a, $b) {
-            if ($a['count'] > $b['count']) {
+            if ($a['total'] > $b['total']) {
                 return -1;
-            } else if ($a['count'] == $b['count']) {
+            } else if ($a['total'] == $b['total']) {
                 return 0;
             } else {
                 return 1;
