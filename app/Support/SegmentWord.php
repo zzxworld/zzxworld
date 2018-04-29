@@ -48,7 +48,7 @@ class SegmentWord
             return [
                 'text' => $key,
                 'count' => $value,
-                'freq' => $value / $total,
+                'tf' => $value / $total,
             ];
         }, array_keys($words), array_values($words));
 
