@@ -36,7 +36,9 @@ class SegmentWord
             return [];
         }
 
-        return $result['words'];
+        return array_filter($result['words'], function ($word) {
+            return mb_strlen($word) < 63;
+        });
     }
 
     /**
