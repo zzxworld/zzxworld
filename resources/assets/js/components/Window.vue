@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -16,20 +16,23 @@
 </template>
 
 <script>
+    import Vue from 'vue';
+
     export default {
         props: {
             title: String,
         },
-        mounted: function () {
+
+        mounted () {
             var app = this;
-            $(this.$el).on('hide.bs.modal', function () {
+            $(this.$el).on('hide.bs.modal', () => {
                 app.$emit('close');
             });
         },
     }
 
     Vue.directive('open-if', {
-        update: function (el, binding) {
+        update: (el, binding) => {
             if (binding.value) {
                 $(el).modal('show');
             }

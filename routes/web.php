@@ -35,3 +35,10 @@ Route::resource('notes', 'NoteController');
 Route::resource('notebooks', 'NotebookController');
 
 Route::resource('tool/segmentwords', 'Tool\SegmentWordController', ['only' => ['index', 'store']]);
+
+Route::resource('sites', 'SiteController');
+
+// 管理功能
+Route::namespace('admin')->prefix('admin')->group(function () {
+    Route::resource('sites', 'SiteController');
+});
