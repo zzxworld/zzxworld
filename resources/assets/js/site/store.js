@@ -14,7 +14,11 @@ const mutations = {
 }
 
 const actions = {
-
+    loadList () {
+        axios.get('/admin/sites').then((response) => {
+            this.commit('setSites', response.data.sites)
+        })
+    }
 }
 
 export default new Vuex.Store({

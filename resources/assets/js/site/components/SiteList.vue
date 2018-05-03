@@ -29,31 +29,31 @@
         </div>
 
         <base-window
+            id="add-window"
             title="新增站点"
             v-open-if="openEditWindow"
             @close="openEditWindow=false">
             <div class="form-group">
                 <label>网址</label>
-                <input class="form-control" type="">
-            </div>
-            <div class="form-group">
-                <label>名称</label>
-                <input class="form-control" type="">
+                <input class="form-control" type="text" v-model="site.url">
             </div>
             <div class="form-group">
                 <label>标签</label>
-                <input class="form-control" type="">
+                <input class="form-control" type="text" v-model="site.tags">
                 <span class="help-block">支持逗号分割多个标签</span>
             </div>
-            <button type="submit" class="btn btn-primary">保存</button>
+            <button type="submit" class="btn btn-primary" @click="save">保存</button>
         </base-window>
     </div>
 </template>
 
 <script>
+    import swal from 'sweetalert';
+
     export default {
         data () {
             return {
+                site: {},
                 openEditWindow: false,
             }
         },
@@ -61,7 +61,54 @@
         computed: {
             sites () {
                 return this.$store.state.sites;
+            },
+
+            siteTags () {
+                var tags = [];
+
+                if (this.site.hasOwnProperty('tags')) {
+                    tags = this.site.tags.replace(/，/g, ',').split(',').filter((rs) => {
+                        return rs && rs.trim() != '';
+                    }).filter((rs, pos, self) => {
+                        return self.indexOf(rs) === pos;
+                    }).map((rs) => {
+                        return rs.trim();
+                    });
+                }
+
+                return tags;
+            },
+        },
+
+        methods: {
+            save () {
+                if (!this.site.url) {
+                    swal('', '网址没有输入', 'warning')
+                    return false;
+                }
+
+                axios.post('/admin/sites', {
+                    url: this.site.url,
+                    tags: this.siteTags,
+                }).then((response) => {
+                    if (response.data.message != 'ok') {
+                        swal('', response.data.message, 'warning')
+                    } else {
+                        this.$store.dispatch('loadList')
+                        $('#add-window').modal('hide')
+                    }
+                }).catch((error) => {
+                    if (error.response.status == 422) {
+                        swal('', error.response.data.message, 'error')
+                    } else {
+                        swal('', '保存站点失败', 'error')
+                    }
+                })
             }
+        },
+
+        mounted () {
+            this.$store.dispatch('loadList')
         }
     }
 </script>
