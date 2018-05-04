@@ -2,14 +2,16 @@
     <div class="container">
         <div class="content-header">
             <button type="button" class="btn btn-default" @click="openEditWindow=true">新增</button>
-            <button type="button" class="btn btn-default">删除</button>
+            <button type="button" class="btn btn-default" :disabled="!selected.length" @click="del">删除</button>
         </div>
 
         <div class="panel panel-default">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <td class="text-center" width="50"><input type="checkbox" /></td>
+                        <td class="text-center" width="50">
+                            <input type="checkbox" @change="toggleSelectAll" />
+                        </td>
                         <th>名称</th>
                         <th>网址</th>
                         <th>标签</th>
@@ -18,7 +20,9 @@
                 </thead>
                 <tbody>
                     <tr v-for="site in sites">
-                        <td class="text-center"><input type="checkbox" /></td>
+                        <td class="text-center">
+                            <input type="checkbox" :value="site.id" v-model="selected" />
+                        </td>
                         <td>{{ site.name }}</td>
                         <td>{{ site.url }}</td>
                         <td></td>
@@ -54,6 +58,7 @@
         data () {
             return {
                 site: {},
+                selected: [],
                 openEditWindow: false,
             }
         },
@@ -81,6 +86,16 @@
         },
 
         methods: {
+            toggleSelectAll (e) {
+                if (e.target.checked) {
+                    this.selected = this.sites.map((site) => {
+                        return site.id;
+                    })
+                } else {
+                    this.selected = [];
+                }
+            },
+
             save () {
                 if (!this.site.url) {
                     swal('', '网址没有输入', 'warning')
@@ -103,6 +118,16 @@
                     } else {
                         swal('', '保存站点失败', 'error')
                     }
+                })
+            },
+
+            del () {
+                swal({
+                    text: '确定要删除选择的站点吗?',
+                    dangerMode: true,
+                    buttons: ['取消', '确定'],
+                }).then((confirmed) => {
+                    console.log(confirmed)
                 })
             }
         },
