@@ -2,9 +2,6 @@
 
 namespace App\Models\Concerns;
 
-use App\Models\Comment;
-use App\Models\User;
-
 trait Taggable
 {
     public function tags()

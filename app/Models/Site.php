@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Site extends Model
 {
-    Use Concorns\Taggable;
+    use Concerns\Taggable;
 
     const MORPH_NAME = 'SI';
 
