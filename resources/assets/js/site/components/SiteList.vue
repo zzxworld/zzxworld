@@ -1,3 +1,9 @@
+<style lang="scss">
+    .label-tag {
+        margin-right: 0.5em;
+    }
+</style>
+
 <template>
     <div class="container">
         <div class="content-header">
@@ -25,7 +31,7 @@
                         </td>
                         <td>{{ site.name }}</td>
                         <td>{{ site.url }}</td>
-                        <td></td>
+                        <td><span class="label-tag label label-default" v-for="tag in site.tags">{{ tag.name }}</span></td>
                         <td></td>
                     </tr>
                 </tbody>

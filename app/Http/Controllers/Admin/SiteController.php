@@ -13,7 +13,7 @@ class SiteController extends Controller
     {
         if ($request->isXmlHttpRequest()) {
             $limit = $request->input('limit', 50);
-            $sites = Site::orderBy('id', 'desc')->paginate($limit);
+            $sites = Site::orderBy('id', 'desc')->with('tags')->paginate($limit);
 
             return [
                 'message' => 'ok',
