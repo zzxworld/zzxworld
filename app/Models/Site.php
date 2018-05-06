@@ -30,4 +30,13 @@ class Site extends Model
     {
         return (bool) static::where('uuid', static::buildUUID($url))->count();
     }
+
+    /**
+     * 删除站点
+     */
+    public function delete()
+    {
+        $this->tags()->delete();
+        parent::delete();
+    }
 }
