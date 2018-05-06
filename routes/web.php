@@ -40,5 +40,6 @@ Route::resource('sites', 'SiteController');
 
 // 管理功能
 Route::namespace('admin')->prefix('admin')->group(function () {
+    Route::delete('sites/bulk_destroy', 'SiteController@bulkDestroy');
     Route::resource('sites', 'SiteController');
 });

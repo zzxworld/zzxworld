@@ -38,4 +38,16 @@ class SiteController extends Controller
 
         return ['message' => 'ok'];
     }
+
+    public function bulkDestroy(Request $request)
+    {
+        $this->validate($request, [
+            'ids' => 'required|array',
+            'ids.*' => 'numeric',
+        ]);
+
+        Site::whereIn('id', $request->input('ids'))->delete();
+
+        return ['message' => 'ok'];
+    }
 }

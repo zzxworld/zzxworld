@@ -6,6 +6,6 @@ Vue.component('base-window', require('../components/Window'))
 Vue.component('site-list', require('./components/SiteList'))
 
 new Vue({
-    el: '#app',
     store,
+    el: '#app',
 })

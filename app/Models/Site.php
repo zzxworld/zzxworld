@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Site extends Model
 {
-    protected $fillable = ['url'];
+    protected $fillable = ['url', 'name'];
 
     public static function boot()
     {

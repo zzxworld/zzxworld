@@ -42,6 +42,10 @@
                 <input class="form-control" type="text" v-model="site.url">
             </div>
             <div class="form-group">
+                <label>名称</label>
+                <input class="form-control" type="text" v-model="site.name">
+            </div>
+            <div class="form-group">
                 <label>标签</label>
                 <input class="form-control" type="text" v-model="site.tags">
                 <span class="help-block">支持逗号分割多个标签</span>
@@ -104,6 +108,7 @@
 
                 axios.post('/admin/sites', {
                     url: this.site.url,
+                    name: this.site.name,
                     tags: this.siteTags,
                 }).then((response) => {
                     if (response.data.message != 'ok') {
@@ -122,12 +127,22 @@
             },
 
             del () {
+                let app = this;
+
                 swal({
                     text: '确定要删除选择的站点吗?',
                     dangerMode: true,
                     buttons: ['取消', '确定'],
                 }).then((confirmed) => {
-                    console.log(confirmed)
+                    axios.delete('/admin/sites/bulk_destroy', {
+                        params: {
+                            ids: this.selected,
+                        }
+                    }).then((response) => {
+                        this.$store.dispatch('loadList')
+                    }).catch((error) => {
+                        swal('', '删除操作失败', 'error')
+                    });
                 })
             }
         },
