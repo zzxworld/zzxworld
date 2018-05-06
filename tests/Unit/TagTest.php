@@ -16,17 +16,17 @@ class TagTest extends TestCase
         $names = [];
 
         // 空元素测试
-        $tags = Tag::bulkFindOrCreate($names);
+        $tags = Tag::findOrCreateMany($names);
         $this->assertEquals(collect(), $tags);
 
         // 正常测试
         $names = ['aaa', 'bbb', 'ccc'];
-        $tags = Tag::bulkFindOrCreate($names);
+        $tags = Tag::findOrCreateMany($names);
         $this->assertEquals(3, $tags->count());
         $this->assertEquals($names, $tags->pluck('name')->toArray());
 
         // 重复测试
-        $tags = Tag::bulkFindOrCreate($names);
+        $tags = Tag::findOrCreateMany($names);
         $this->assertEquals(3, $tags->count());
     }
 }

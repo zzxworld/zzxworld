@@ -6,6 +6,6 @@ trait Taggable
 {
     public function tags()
     {
-        return $this->morphMany('App\Models\Tag', 'taggable');
+        return $this->morphToMany('App\Models\Tag', 'taggable');
     }
 }

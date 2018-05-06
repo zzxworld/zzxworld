@@ -8,7 +8,7 @@ class Tag extends Model
 {
     protected $fillable = ['name'];
 
-    public static function bulkFindOrCreate(array $names)
+    public static function findOrCreateMany(array $names)
     {
         $tags = collect();
         $exists = static::whereIn('name', $names)->get();
