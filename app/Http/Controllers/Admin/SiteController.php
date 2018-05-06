@@ -49,7 +49,13 @@ class SiteController extends Controller
             'ids.*' => 'numeric',
         ]);
 
-        Site::whereIn('id', $request->input('ids'))->delete();
+        foreach ($request->input('ids') as $id) {
+            $site = Site::find($id);
+
+            if ($site) {
+                $site->delete();
+            }
+        }
 
         return ['message' => 'ok'];
     }

@@ -36,7 +36,7 @@ class Site extends Model
      */
     public function delete()
     {
-        $this->tags()->delete();
+        $this->tags()->detach();
         parent::delete();
     }
 }
