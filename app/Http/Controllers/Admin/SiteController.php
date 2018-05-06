@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Site;
+use App\Models\Tag;
 
 class SiteController extends Controller
 {
@@ -34,7 +35,9 @@ class SiteController extends Controller
             return ['message' => '站点已存在'];
         }
 
-        Site::create($request->all());
+        $tags = Tag::findOrCreateMany($request->input('tags'));
+        $site = Site::create($request->all());
+        $site->tags()->sync($tags->pluck('id')->toArray());
 
         return ['message' => 'ok'];
     }
