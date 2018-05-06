@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Site extends Model
 {
+    Use Concorns\Taggable;
+
+    const MORPH_NAME = 'SI';
+
     protected $fillable = ['url', 'name'];
 
     public static function boot()
