@@ -15,4 +15,11 @@ class SiteController extends Controller
             'sites' => $sites,
         ]);
     }
+
+    public function show(Site $site)
+    {
+        return view('site.show', [
+            'site' => $site,
+        ]);
+    }
 }
