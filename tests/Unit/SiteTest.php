@@ -24,7 +24,21 @@ class SiteTest extends TestCase
     public function htmlProvider()
     {
         return [
-
+            [file_get_contents(__DIR__.'/Data/site_php_net.html'), [
+                'title' => 'PHP: parse_url - Manual',
+                'icon' => 'http://php.net/favicon.ico',
+                'support_responsive' => true,
+                'feeds' => [
+                    [
+                        'url' => 'http://php.net/releases/feed.php',
+                        'title' => 'PHP Release feed',
+                    ],
+                    [
+                        'url' => 'http://php.net/feed.atom',
+                        'title' => 'PHP: Hypertext Preprocessor'
+                    ],
+                ],
+            ]],
         ];
     }
 
@@ -35,6 +49,24 @@ class SiteTest extends TestCase
     {
         $this->assertEquals($scheme, SiteParse::extractURLScheme($url));
         $this->assertEquals($domain, SiteParse::extractURLDomain($url));
+    }
+
+    /**
+     * @dataProvider htmlProvider
+     */
+    public function testExtractInfo($html, $info)
+    {
+        $this->assertEquals($info['title'], SiteParse::extractTitle($html));
+        $this->assertEquals($info['icon'], SiteParse::extractIcon($html));
+        $this->assertEquals($info['support_responsive'], SiteParse::extractSupportResponsive($html));
+
+        $feeds = SiteParse::extractFeeds($html);
+        $this->assertEquals(count($info['feeds']), count($feeds));
+
+        foreach ($info['feeds'] as $i => $feed) {
+            $this->assertEquals($feed['title'], $feeds[$i]['title']);
+            $this->assertEquals($feed['url'], $feeds[$i]['url']);
+        }
     }
 
     public function testCreateWithTags()
