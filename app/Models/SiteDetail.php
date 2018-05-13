@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SiteDetail extends Model
 {
+    protected $fillable = ['title', 'icon'];
+
     /**
      * 站点详情
      */

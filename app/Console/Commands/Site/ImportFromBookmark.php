@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use DomDocument;
 use App\Models\Support\SiteParse;
 use App\Models\Site;
+use Log;
 
 class ImportFromBookmark extends Command
 {
@@ -43,12 +44,12 @@ class ImportFromBookmark extends Command
 
     protected function saveSite(array $attributes)
     {
-        $site = Site::where('domain', $attributes['domain'])->first();
-        if ($site) {
+        try {
+            $site = Site::create($attributes);
+            $site->detail()->create($attributes);
+        } catch (\PDOException $e) {
+            Log::error($e->getMessage());
             return false;
         }
-
-        $site = Site::create($attributes);
-        $site->detail()->create($attributes);
     }
 }

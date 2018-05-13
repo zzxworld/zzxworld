@@ -10,16 +10,7 @@ class Site extends Model
 
     const MORPH_NAME = 'SI';
 
-    protected $fillable = ['scheme', 'domain', 'name'];
-
-    public static function boot()
-    {
-        parent::boot();
-
-        static::saving(function ($site) {
-            $site->uuid = static::buildUUID($site->url);
-        });
-    }
+    protected $fillable = ['is_private', 'scheme', 'domain', 'port', 'path', 'name'];
 
     /**
      * 站点详情
@@ -35,6 +26,8 @@ class Site extends Model
     public function delete()
     {
         $this->tags()->detach();
+        $this->detail()->delete();
+
         parent::delete();
     }
 }
