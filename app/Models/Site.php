@@ -10,7 +10,7 @@ class Site extends Model
 
     const MORPH_NAME = 'SI';
 
-    protected $fillable = ['url', 'name'];
+    protected $fillable = ['scheme', 'domain', 'name'];
 
     public static function boot()
     {
@@ -21,14 +21,12 @@ class Site extends Model
         });
     }
 
-    public static function buildUUID(string $url)
+    /**
+     * 站点详情
+     */
+    public function detail()
     {
-        return md5($url);
-    }
-
-    public static function isExist(string $url)
-    {
-        return (bool) static::where('uuid', static::buildUUID($url))->count();
+        return $this->hasOne('App\Models\SiteDetail');
     }
 
     /**
