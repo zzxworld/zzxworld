@@ -21,6 +21,24 @@ class Site extends Model
     }
 
     /**
+     * 站点链接
+     */
+    public function getURLAttribute()
+    {
+        $url = $this->scheme.'://'.$this->domain;
+
+        if ($this->port != 80) {
+            $url .= ':'.$this->port;
+        }
+
+        if ($this->path) {
+            $url .= '/'.$this->path;
+        }
+
+        return $url;
+    }
+
+    /**
      * 删除站点
      */
     public function delete()
