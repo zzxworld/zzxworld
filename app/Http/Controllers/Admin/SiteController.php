@@ -42,6 +42,21 @@ class SiteController extends Controller
         return ['message' => 'ok'];
     }
 
+    public function update(Request $request, Site $site)
+    {
+        $this->validate($request, [
+            'url' => 'required|url',
+            'tags' => 'array',
+        ]);
+
+        $site->update($requets->all());
+
+        $tags = Tag::findOrCreateMany($request->input('tags'));
+        $site->tags()->sync($tags->pluck('id')->toArray());
+
+        return ['message' => 'ok'];
+    }
+
     public function bulkDestroy(Request $request)
     {
         $this->validate($request, [
