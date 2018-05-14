@@ -29,7 +29,7 @@
                         <td class="text-center">
                             <input type="checkbox" :value="site.id" v-model="selected" />
                         </td>
-                        <td>{{ site.name }}</td>
+                        <td><a href="javascript:;" @click="edit(site)">{{ site.name }}</a></td>
                         <td>{{ site.url }}</td>
                         <td><span class="label-tag label label-default" v-for="tag in site.tags">{{ tag.name }}</span></td>
                         <td></td>
@@ -81,7 +81,7 @@
             siteTags () {
                 var tags = [];
 
-                if (this.site.hasOwnProperty('tags')) {
+                if (this.site.hasOwnProperty('tags') && typeof this.site.tags == 'string') {
                     tags = this.site.tags.replace(/，/g, ',').split(',').filter((rs) => {
                         return rs && rs.trim() != '';
                     }).filter((rs, pos, self) => {
@@ -106,30 +106,45 @@
                 }
             },
 
+            edit (site) {
+                this.site = site;
+                this.openEditWindow = true;
+            },
+
             save () {
                 if (!this.site.url) {
                     swal('', '网址没有输入', 'warning')
                     return false;
                 }
 
-                axios.post('/admin/sites', {
-                    url: this.site.url,
-                    name: this.site.name,
-                    tags: this.siteTags,
-                }).then((response) => {
+                let successCallback = (response) => {
                     if (response.data.message != 'ok') {
                         swal('', response.data.message, 'warning')
                     } else {
                         this.$store.dispatch('loadList')
                         $('#add-window').modal('hide')
                     }
-                }).catch((error) => {
+                }
+
+                let failureCallback = (error) => {
                     if (error.response.status == 422) {
                         swal('', error.response.data.message, 'error')
                     } else {
                         swal('', '保存站点失败', 'error')
                     }
-                })
+                }
+
+                let data = this.site;
+
+                data.tags = this.siteTags;
+
+                let url = '/admin/sites';
+
+                if (this.site.id > 0) {
+                    axios.put('/admin/sites/'+data.id, data).then(successCallback).catch(failureCallback);
+                } else {
+                    axios.post('/admin/sites', data).then(successCallback).catch(failureCallback);
+                }
             },
 
             del () {

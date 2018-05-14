@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Support\SiteParse;
 
 class Site extends Model
 {
@@ -10,7 +11,8 @@ class Site extends Model
 
     const MORPH_NAME = 'SI';
 
-    protected $fillable = ['is_private', 'scheme', 'domain', 'port', 'path', 'name'];
+    protected $fillable = ['is_private', 'name'];
+    protected $appends = ['url'];
 
     /**
      * 站点详情
@@ -21,7 +23,16 @@ class Site extends Model
     }
 
     /**
-     * 站点链接
+     * 设置网站链接
+     */
+    public function setURLAttribute($value)
+    {
+        $this->attributes['scheme'] = SiteParse::extractURLScheme($value);
+        $this->attributes['domain'] = SiteParse::extractURLDomain($value);
+    }
+
+    /**
+     * 获取站点链接
      */
     public function getURLAttribute()
     {

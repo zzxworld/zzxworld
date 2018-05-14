@@ -31,15 +31,17 @@ class SiteController extends Controller
             'tags' => 'array',
         ]);
 
-        if (Site::isExist($request->input('url'))) {
-            return ['message' => '站点已存在'];
+        try {
+            $tags = Tag::findOrCreateMany($request->input('tags'));
+            $site = new Site($request->all());
+            $site->url = $request->input('url');
+            $site->save();
+            $site->tags()->sync($tags->pluck('id')->toArray());
+        } catch (\Exception $e) {
+            return ['message' => $e->getMessage()];
         }
 
-        $tags = Tag::findOrCreateMany($request->input('tags'));
-        $site = Site::create($request->all());
-        $site->tags()->sync($tags->pluck('id')->toArray());
-
-        return ['message' => 'ok'];
+        return ['message' => 'ok', 'site' => $site];
     }
 
     public function update(Request $request, Site $site)
@@ -49,12 +51,18 @@ class SiteController extends Controller
             'tags' => 'array',
         ]);
 
-        $site->update($requets->all());
+        try {
+            $site->fill($request->all());
+            $site->url = $request->input('url');
+            $site->save();
 
-        $tags = Tag::findOrCreateMany($request->input('tags'));
-        $site->tags()->sync($tags->pluck('id')->toArray());
+            $tags = Tag::findOrCreateMany($request->input('tags'));
+            $site->tags()->sync($tags->pluck('id')->toArray());
+        } catch (\Exception $e) {
+            return ['message' => $e->getMessage()];
+        }
 
-        return ['message' => 'ok'];
+        return ['message' => 'ok', 'site' => $site];
     }
 
     public function bulkDestroy(Request $request)

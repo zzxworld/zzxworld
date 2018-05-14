@@ -71,13 +71,13 @@ class SiteTest extends TestCase
 
     public function testCreateWithTags()
     {
-        $tags = Tag::findOrCreateMany(['aaa', 'bbb']);
-        $site = Site::create([
-            'url' => 'https://www.zzxworld.com',
-            'name' => 'zzxworld',
-        ]);
-        $site->tags()->sync([1, 2]);
+        $site = new Site;
+        $site->name = 'zzxworld';
+        $site->url = 'https://www.zzxworld.com';
+        $site->save();
 
-        $this->assertEquals(2, $site->tags()->count());
+        $this->assertInstanceOf(Site::class, $site);
+        $this->assertEquals('https', $site->scheme);
+        $this->assertEquals('www.zzxworld.com', $site->domain);
     }
 }
