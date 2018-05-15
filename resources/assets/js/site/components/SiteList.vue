@@ -53,7 +53,7 @@
             </div>
             <div class="form-group">
                 <label>标签</label>
-                <input class="form-control" type="text" v-model="site.tags">
+                <input class="form-control" type="text" v-model="site.tagNames">
                 <span class="help-block">支持逗号分割多个标签</span>
             </div>
             <button type="submit" class="btn btn-primary" @click="save">保存</button>
@@ -81,8 +81,8 @@
             siteTags () {
                 var tags = [];
 
-                if (this.site.hasOwnProperty('tags') && typeof this.site.tags == 'string') {
-                    tags = this.site.tags.replace(/，/g, ',').split(',').filter((rs) => {
+                if (this.site.hasOwnProperty('tagNames') && typeof this.site.tagNames == 'string') {
+                    tags = this.site.tagNames.replace(/，/g, ',').split(',').filter((rs) => {
                         return rs && rs.trim() != '';
                     }).filter((rs, pos, self) => {
                         return self.indexOf(rs) === pos;
@@ -108,6 +108,9 @@
 
             edit (site) {
                 this.site = site;
+                this.site.tagNames = site.tags.map((rs) => {
+                    return rs.name;
+                });
                 this.openEditWindow = true;
             },
 
