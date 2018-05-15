@@ -40,7 +40,7 @@ Route::resource('sites', 'SiteController');
 Route::get('sites/{site}/go', 'SiteController@go');
 
 // 管理功能
-Route::namespace('admin')->middleware('admin')->prefix('admin')->group(function () {
+Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
     Route::delete('sites/bulk_destroy', 'SiteController@bulkDestroy');
     Route::resource('sites', 'SiteController');
 });
