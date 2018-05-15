@@ -16,9 +16,9 @@ class SiteController extends Controller
         ]);
     }
 
-    public function show(Site $site)
+    public function go(Site $site)
     {
-        return view('site.show', [
+        return view('site.go', [
             'site' => $site,
         ]);
     }
