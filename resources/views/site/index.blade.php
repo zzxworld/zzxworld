@@ -23,6 +23,9 @@
                             <span class="glyphicon glyphicon-lock https"></span>
                         @endif
                         <a class="link" rel="external nofollow" target="_blank" href="{{ url('sites/'.$site->id.'/go') }}">{{ $site->name }}</a>
+                        @foreach ($site->tags as $tag)
+                            <a class="label label-default" href="{{ url('sites/tags/'.$tag->id) }}">{{ $tag->name }}</a>
+                        @endforeach
                     </li>
                 @endforeach
             </ul>
