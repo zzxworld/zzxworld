@@ -16,9 +16,8 @@ def deploy(category=None):
             run('npm i')
         elif category == 'migration':
             run('php artisan migrate')
-        elif category == 'package':
-            run('composer install')
         else:
+            run('composer install')
             run('php artisan cache:clear')
             run('php artisan route:clear')
             run('php artisan view:clear')

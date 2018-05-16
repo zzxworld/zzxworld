@@ -38,6 +38,7 @@ Route::resource('tool/segmentwords', 'Tool\SegmentWordController', ['only' => ['
 
 Route::resource('sites', 'SiteController');
 Route::get('sites/{site}/go', 'SiteController@go');
+Route::get('sites/tags/{id}', 'SiteController@tagSiteIndex');
 
 // 管理功能
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
