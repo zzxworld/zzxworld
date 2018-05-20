@@ -44,6 +44,8 @@ class SiteController extends Controller
             $site->url = $request->input('url');
             $site->save();
             $site->tags()->sync($tags->pluck('id')->toArray());
+
+            FetchSiteDetail::dispatch($site->id);
         } catch (\Exception $e) {
             return ['message' => $e->getMessage()];
         }
