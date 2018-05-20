@@ -26,6 +26,12 @@ class SiteDetail extends Model
         $response = Requests::get($site->url);
         $content = $response->body;
 
+        // 提取并保存站点标题
+        $data = [
+            'title' => SiteParse::extractTitle($content),
+        ];
+
+        // 提取并保存站点图标
         $icon = SiteParse::extractIcon($content);
         if (preg_match('/^\/\//', $icon)) {
             $icon = $site->scheme.':'.$icon;
@@ -36,15 +42,28 @@ class SiteDetail extends Model
             $icon = 'data:image/png;base64,'.base64_encode($icon->body);
         }
 
-        $data = [
-            'title' => SiteParse::extractTitle($content),
-            'icon' => $icon,
-        ];
+        $data['icon'] = $icon;
 
         if ($site->detail) {
             $site->detail()->update($data);
         } else {
             $site->detail()->create($data);
         }
+
+        // 提取并保存 RSS 源
+        $urls = [];
+        $feeds = SiteParse::extractFeeds($content);
+
+        if ($feeds) {
+            foreach ($feeds as $feed) {
+                $site->feeds()->updateOrCreate([
+                    'url' => $feed['url'],
+                ], $feed);
+
+                $urls[] = $feed['url'];
+            }
+        }
+
+        $site->feeds()->whereNotIn('url', $urls)->delete();
     }
 }

@@ -23,6 +23,14 @@ class Site extends Model
     }
 
     /**
+     * 站点数据源
+     */
+    public function feeds()
+    {
+        return $this->hasMany('App\Models\SiteFeed');
+    }
+
+    /**
      * 设置网站链接
      */
     public function setURLAttribute($value)
