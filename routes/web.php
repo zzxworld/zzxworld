@@ -43,5 +43,6 @@ Route::get('sites/tags/{id}', 'SiteController@tagSiteIndex');
 // 管理功能
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
     Route::delete('sites/bulk_destroy', 'SiteController@bulkDestroy');
+    Route::put('sites/bulk_update_detail', 'SiteController@bulkUpdateDetail');
     Route::resource('sites', 'SiteController');
 });

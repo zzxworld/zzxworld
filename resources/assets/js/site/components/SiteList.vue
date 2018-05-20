@@ -8,7 +8,8 @@
     <div class="container">
         <div class="content-header">
             <button type="button" class="btn btn-default" @click="openEditWindow=true">新增</button>
-            <button type="button" class="btn btn-default" :disabled="!selected.length" @click="del">删除</button>
+            <button type="button" class="btn btn-default" :disabled="!selected.length" @click="bulkDel">删除</button>
+            <button type="button" class="btn btn-default" :disabled="!selected.length" @click="bulkUpdateDetail">更新详情</button>
         </div>
 
         <div class="panel panel-default">
@@ -165,7 +166,7 @@
                 }
             },
 
-            del () {
+            bulkDel() {
                 let app = this;
 
                 swal({
@@ -182,6 +183,14 @@
                     }).catch((error) => {
                         swal('', '删除操作失败', 'error')
                     });
+                })
+            },
+
+            bulkUpdateDetail() {
+                axios.put('/admin/sites/bulk_update_detail', {
+                    ids: this.selected
+                }).then(response => {
+                    swal('', '更新站点详情任务已分配至后台执行，请稍后刷新页面查看更新数据。', 'success');
                 })
             }
         },

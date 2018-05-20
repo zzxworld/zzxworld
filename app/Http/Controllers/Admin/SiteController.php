@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Site;
 use App\Models\Tag;
+use App\Jobs\FetchSiteDetail;
 
 class SiteController extends Controller
 {
@@ -87,6 +88,20 @@ class SiteController extends Controller
             if ($site) {
                 $site->delete();
             }
+        }
+
+        return ['message' => 'ok'];
+    }
+
+    public function bulkUpdateDetail(Request $request)
+    {
+        $this->validate($request, [
+            'ids' => 'required|array',
+            'ids.*' => 'numeric',
+        ]);
+
+        foreach ($request->input('ids') as $id) {
+            FetchSiteDetail::dispatch($id);
         }
 
         return ['message' => 'ok'];

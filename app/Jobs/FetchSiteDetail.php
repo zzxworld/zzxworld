@@ -26,10 +26,19 @@ class FetchSiteDetail implements ShouldQueue
     {
         $site = Site::find($this->siteId);
         if (!$site) {
-            Log::warning('['.get_class($this).'] invalid site.', ['id' => $this->siteId]);
+            Log::warning('['.get_class($this).'] invalid site.', [
+                'id' => $this->siteId,
+            ]);
+
             return;
         }
 
-        SiteDetail::fetch($site);
+        try {
+            SiteDetail::fetch($site);
+        } catch (\Exception $e) {
+            Log::error('['.get_class($this).'] '.$e->getMessage(), [
+                'site' => $site->toArray(),
+            ]);
+        }
     }
 }
