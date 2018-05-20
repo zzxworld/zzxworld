@@ -49,22 +49,14 @@
                                 </a>
 
                                 <ul class="dropdown-menu">
-                                    @can('view', App\Models\User::class)
-                                    <li><a href="{{ route('users.index') }}">注册用户</a></li>
-                                    @endcan
-
-                                    @can('create', App\Models\Post::class)
-                                    <li><a href="{{ route('posts.create') }}">新增文章</a></li>
-                                    @endcan
-
-                                    @can('update', App\Models\Comment::class)
+                                    @if (Auth::user()->isRoot)
+                                    <li><a href="{{ url('admin/sites') }}">网站管理</a></li>
+                                    <li><a href="{{ route('users.index') }}">用户管理</a></li>
                                     <li><a href="{{ route('comments.index') }}">评论管理</a></li>
-                                    @endcan
-
-                                    @can('create', App\Models\NewsFeed::class)
+                                    <li><a href="{{ route('posts.create') }}">新增文章</a></li>
                                     <li><a href="{{ route('feeds.index') }}">头条数据源</a></li>
-                                    @endcan
                                     <li role="separator" class="divider"></li>
+                                    @endif
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
