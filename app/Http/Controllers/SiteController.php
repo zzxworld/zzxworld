@@ -10,9 +10,10 @@ class SiteController extends Controller
 {
     public function index(Request $request)
     {
-        $sites = Site::with(['tags', 'detail'])
-            ->where('is_private', false)
-            ->orderBy('id', 'desc')->paginate(50);
+        $sites = Site::where('is_private', false)
+            ->orderBy('id', 'desc')
+            ->with(['tags', 'detail'])
+            ->paginate(50);
 
         $sites->each(function ($site) {
             $site->append('title', 'icon');
@@ -34,7 +35,7 @@ class SiteController extends Controller
     {
         $sites = Site::whereHas('tags', function ($query) use ($id) {
             $query->where('tag_id', intval($id));
-        })->get();
+        })->orderBy('id', 'desc')->with(['tags', 'detail'])->get();
 
         if (!$sites->count()) {
             abort(404);
