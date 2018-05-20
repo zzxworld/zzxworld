@@ -2,7 +2,7 @@
 
 <?php $isEnglishTag = preg_match('/^[a-z]+$/i', $tag->name) ?>
 
-@section('title', date('Y').' 年'.($isEnglishTag ? ' '.$tag->name.' ' : $tag->name).'网站推荐 | zzxworld')
+@section('title', ($isEnglishTag ? ' '.$tag->name.' ' : $tag->name).'网站推荐 - '.date('Y').' | zzxworld')
 
 @push('css')
     <style type="text/css" media="screen">
