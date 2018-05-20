@@ -50,6 +50,18 @@ class Site extends Model
     }
 
     /**
+     * 站点图标
+     */
+    public function getIconAttribute()
+    {
+        if (!$this->detail || !$this->detail->icon) {
+            return;
+        }
+
+        return $this->detail->icon;
+    }
+
+    /**
      * 删除站点
      */
     public function delete()

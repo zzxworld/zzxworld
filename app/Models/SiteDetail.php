@@ -33,7 +33,7 @@ class SiteDetail extends Model
 
         if (preg_match('/^http[s]?:/', $icon)) {
             $icon = Requests::get($icon);
-            $icon = 'data:image/jpeg;base64,'.base64_encode($icon->body);
+            $icon = 'data:image/png;base64,'.base64_encode($icon->body);
         }
 
         $site->detail()->create([
