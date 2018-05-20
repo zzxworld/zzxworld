@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Support\SiteParse;
+use Requests;
 
 class SiteDetail extends Model
 {
@@ -14,5 +16,29 @@ class SiteDetail extends Model
     public function site()
     {
         return $this->belongsTo('App\Models\Site');
+    }
+
+    /**
+     * 抓取站点详情
+     */
+    public static function fetch(Site $site)
+    {
+        $response = Requests::get($site->url);
+        $content = $response->body;
+
+        $icon = SiteParse::extractIcon($content);
+        if (preg_match('/^\/\//', $icon)) {
+            $icon = $site->scheme.':'.$icon;
+        }
+
+        if (preg_match('/^http[s]?:/', $icon)) {
+            $icon = Requests::get($icon);
+            $icon = 'data:image/jpeg;base64,'.base64_encode($icon->body);
+        }
+
+        $site->detail()->create([
+            'title' => SiteParse::extractTitle($content),
+            'icon' => $icon,
+        ]);
     }
 }
