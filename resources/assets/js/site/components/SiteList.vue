@@ -30,7 +30,9 @@
                         <td class="text-center">
                             <input type="checkbox" :value="site.id" v-model="selected" />
                         </td>
-                        <td><a href="javascript:;" @click="edit(site)">{{ site.name }}</a></td>
+                        <td>
+                            <a href="javascript:;" @click="edit(site)">{{ site.title ? site.title : site.name }}</a>
+                        </td>
                         <td>{{ site.url }}</td>
                         <td><span class="label-tag label label-default" v-for="tag in site.tags">{{ tag.name }}</span></td>
                         <td>

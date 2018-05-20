@@ -58,6 +58,18 @@ class Site extends Model
     }
 
     /**
+     * 站点标题
+     */
+    public function getTitleAttribute()
+    {
+        if (!$this->detail || !$this->detail->title) {
+            return;
+        }
+
+        return $this->detail->title;
+    }
+
+    /**
      * 站点图标
      */
     public function getIconAttribute()
