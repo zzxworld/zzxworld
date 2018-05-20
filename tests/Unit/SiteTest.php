@@ -45,6 +45,12 @@ class SiteTest extends TestCase
                 'support_responsive' => false,
                 'feeds' => [],
             ]],
+            [file_get_contents(__DIR__.'/Data/site_zhihu_com.html'), [
+                'title' => '知乎 - 发现更大的世界',
+                'icon' => 'https://static.zhihu.com/static/favicon.ico',
+                'support_responsive' => true,
+                'feeds' => [],
+            ]],
         ];
     }
 

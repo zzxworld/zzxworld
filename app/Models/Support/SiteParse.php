@@ -25,7 +25,7 @@ class SiteParse
      */
     public static function extractTitle($html)
     {
-        if (preg_match('/<title>(.+)<\/title>/i', $html, $match)) {
+        if (preg_match('/<title.*>(.+)<\/title>/iU', $html, $match)) {
             return trim($match[1]);
         }
     }
@@ -35,7 +35,7 @@ class SiteParse
      */
     public static function extractIcon($html)
     {
-        if (preg_match('/<link.+rel="shortcut icon".+href="(.+)">/iU', $html, $match)) {
+        if (preg_match('/<link rel="shortcut icon".+href="(.+)"/iU', $html, $match)) {
             return trim($match[1]);
         }
     }
@@ -45,7 +45,7 @@ class SiteParse
      */
     public static function extractSupportResponsive($html)
     {
-        return preg_match('/<meta.+name="viewport".+width=device-width.+>/i', $html, $match);
+        return preg_match('/<meta.+name="viewport".+width=device-width.+>/iU', $html, $match);
     }
 
     /**
