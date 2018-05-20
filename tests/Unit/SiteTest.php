@@ -39,6 +39,12 @@ class SiteTest extends TestCase
                     ],
                 ],
             ]],
+            [file_get_contents(__DIR__.'/Data/site_bilibili_com.html'), [
+                'title' => '哔哩哔哩 (゜-゜)つロ 干杯~-bilibili',
+                'icon' => '//static.hdslb.com/images/favicon.ico',
+                'support_responsive' => false,
+                'feeds' => [],
+            ]],
         ];
     }
 
@@ -54,12 +60,32 @@ class SiteTest extends TestCase
     /**
      * @dataProvider htmlProvider
      */
-    public function testExtractInfo($html, $info)
+    public function testExtractTitle($html, $info)
     {
         $this->assertEquals($info['title'], SiteParse::extractTitle($html));
-        $this->assertEquals($info['icon'], SiteParse::extractIcon($html));
-        $this->assertEquals($info['support_responsive'], SiteParse::extractSupportResponsive($html));
+    }
 
+    /**
+     * @dataProvider htmlProvider
+     */
+    public function testExtractIcon($html, $info)
+    {
+        $this->assertEquals($info['icon'], SiteParse::extractIcon($html));
+    }
+
+    /**
+     * @dataProvider htmlProvider
+     */
+    public function testExtractSupportResponsive($html, $info)
+    {
+        $this->assertEquals($info['support_responsive'], SiteParse::extractSupportResponsive($html));
+    }
+
+    /**
+     * @dataProvider htmlProvider
+     */
+    public function testExtractFeeds($html, $info)
+    {
         $feeds = SiteParse::extractFeeds($html);
         $this->assertEquals(count($info['feeds']), count($feeds));
 

@@ -35,7 +35,7 @@ class SiteParse
      */
     public static function extractIcon($html)
     {
-        if (preg_match('/<link.+rel="shortcut icon".+href="(.+)">/i', $html, $match)) {
+        if (preg_match('/<link.+rel="shortcut icon".+href="(.+)">/iU', $html, $match)) {
             return trim($match[1]);
         }
     }
