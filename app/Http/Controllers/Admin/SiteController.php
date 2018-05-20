@@ -47,17 +47,26 @@ class SiteController extends Controller
     public function update(Request $request, Site $site)
     {
         $this->validate($request, [
-            'url' => 'required|url',
+            'url' => 'url',
             'tags' => 'array',
         ]);
 
         try {
             $site->fill($request->all());
-            $site->url = $request->input('url');
+
+            $url = $request->input('url');
+            if ($url) {
+                $site->url = $request->input('url');
+            }
+
             $site->save();
 
-            $tags = Tag::findOrCreateMany($request->input('tags'));
-            $site->tags()->sync($tags->pluck('id')->toArray());
+            $tags = $request->input('tags');
+            if ($tags !== null) {
+                $tags = Tag::findOrCreateMany($request->input('tags'));
+                $site->tags()->sync($tags->pluck('id')->toArray());
+            }
+
         } catch (\Exception $e) {
             return ['message' => $e->getMessage()];
         }

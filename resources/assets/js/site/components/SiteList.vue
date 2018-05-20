@@ -32,7 +32,13 @@
                         <td><a href="javascript:;" @click="edit(site)">{{ site.name }}</a></td>
                         <td>{{ site.url }}</td>
                         <td><span class="label-tag label label-default" v-for="tag in site.tags">{{ tag.name }}</span></td>
-                        <td></td>
+                        <td>
+                            <a href="javascript:;" :class="{
+                                label: true,
+                                'label-success': !site.is_private,
+                                'label-warning': site.is_private
+                                }" @click="togglePrivateStatus(site)">{{ site.is_private ? '隐私' : '公开'}}</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -96,7 +102,7 @@
         },
 
         methods: {
-            toggleSelectAll (e) {
+            toggleSelectAll(e) {
                 if (e.target.checked) {
                     this.selected = this.sites.map((site) => {
                         return site.id;
@@ -104,6 +110,14 @@
                 } else {
                     this.selected = [];
                 }
+            },
+
+            togglePrivateStatus(site) {
+                axios.put('/admin/sites/'+site.id, {
+                    is_private: !site.is_private,
+                }).then(response => {
+                    this.$store.dispatch('loadList');
+                });
             },
 
             edit (site) {
