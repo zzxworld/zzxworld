@@ -10,7 +10,13 @@ class SiteController extends Controller
 {
     public function index(Request $request)
     {
-        $sites = Site::orderBy('id', 'desc')->paginate(50);
+        $sites = Site::with(['tags', 'detail'])
+            ->where('is_private', false)
+            ->orderBy('id', 'desc')->paginate(50);
+
+        $sites->each(function ($site) {
+            $site->append('title', 'icon');
+        });
 
         return view('site.index', [
             'sites' => $sites,
