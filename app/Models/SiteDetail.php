@@ -36,9 +36,15 @@ class SiteDetail extends Model
             $icon = 'data:image/png;base64,'.base64_encode($icon->body);
         }
 
-        $site->detail()->create([
+        $data = [
             'title' => SiteParse::extractTitle($content),
             'icon' => $icon,
-        ]);
+        ];
+
+        if ($site->detail) {
+            $site->detail()->update($data);
+        } else {
+            $site->detail()->create($data);
+        }
     }
 }
