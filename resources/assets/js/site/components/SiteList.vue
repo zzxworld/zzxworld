@@ -138,6 +138,7 @@
                     if (response.data.message != 'ok') {
                         swal('', response.data.message, 'warning')
                     } else {
+                        this.site = {};
                         this.$store.dispatch('loadList')
                         $('#add-window').modal('hide')
                     }
