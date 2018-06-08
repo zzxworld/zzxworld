@@ -32,7 +32,7 @@ Route::resource('news', 'News\PostController');
 Route::resource('task_boards', 'TaskBoardController');
 
 Route::resource('notes', 'NoteController');
-Route::resource('notebooks', 'NotebookController');
+Route::get('notebooks', 'NoteController@notebook');
 
 Route::resource('tool/segmentwords', 'Tool\SegmentWordController', ['only' => ['index', 'store']]);
 

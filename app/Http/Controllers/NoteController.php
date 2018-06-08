@@ -8,6 +8,14 @@ use App\Models\Note;
 class NoteController extends Controller
 {
     /**
+     * 笔记本
+     */
+    public function notebook()
+    {
+        return view('notes.notebook');
+    }
+
+    /**
      * 笔记列表
      */
     public function index(Request $request)
@@ -47,8 +55,6 @@ class NoteController extends Controller
 
         $note = new Note;
         $note->user_id = $request->user()->id;
-        $note->created_at = $request->input('created_at');
-        $note->updated_at = $request->input('updated_at');
         $note->save();
         $note->saveText($request->input('content'));
 
@@ -65,8 +71,6 @@ class NoteController extends Controller
     {
         $this->authorize('update', $note);
 
-        $note->created_at = $request->input('created_at');
-        $note->updated_at = $request->input('updated_at');
         $note->saveText($request->input('content'));
 
         return [
