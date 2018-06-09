@@ -1,16 +1,43 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
+const fs = require('fs');
+const path = require('path');
+const webpack = require('webpack');
 
-mix.sass('resources/assets/sass/admin.scss', 'public/css');
+const loadFilesFrom = (folder) => {
+    let files = [];
+    let resources = fs.readdirSync(folder);
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+    resources.forEach(filename => {
+        let filepath = path.resolve(folder, filename);
 
-mix.js('resources/assets/js/notes/notebook', 'public/js')
-   .sass('resources/assets/sass/notebooks.scss', 'public/css');
+        if (fs.statSync(filepath).isDirectory()) {
+            files = files.concat(loadFilesFrom(filepath));
+        } else {
+            files.push(filepath);
+        }
+    });
 
-mix.js('resources/assets/js/task_boards', 'public/js')
-   .sass('resources/assets/sass/task_boards.scss', 'public/css');
+    return files;
+};
 
-mix.js('resources/assets/js/tool/segmentword', 'public/js/tool');
+const basePath = path.resolve('./');
 
-mix.js('resources/assets/js/site/admin_index', 'public/js/site');
+loadFilesFrom(path.resolve('./resources/assets/js')).filter(filename => {
+    return /\.js$/.test(filename);
+}).filter(filename => {
+    return !/\/(bootstrap)\.js/.test(filename);
+}).forEach(filename => {
+    mix.js(filename.substr(basePath.length+1), 'public/js');
+});
+
+loadFilesFrom(path.resolve('./resources/assets/sass')).filter(filename => {
+    return /^[^_].+\.s?css$/.test(path.basename(filename));
+}).forEach(filename => {
+    mix.sass(filename.substr(basePath.length+1), 'public/css');
+});
+
+if (mix.inProduction()) {
+    mix.version();
+}
+
+mix.extract(['lodash', 'vue', 'jquery', 'axios']);
