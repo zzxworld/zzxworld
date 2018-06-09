@@ -25,15 +25,19 @@ const basePath = path.resolve('./');
 loadFilesFrom(path.resolve('./resources/assets/js')).filter(filename => {
     return /\.js$/.test(filename);
 }).filter(filename => {
-    return !/\/(bootstrap)\.js/.test(filename);
+    return !/\/(bootstrap|js\/app)\.js/.test(filename);
 }).forEach(filename => {
-    mix.js(filename.substr(basePath.length+1), 'public/js');
+    let pathname = path.dirname(filename.substr(path.resolve('./resources/assets/js').length+1))
+    mix.js(filename.substr(basePath.length+1), 'public/js/'+pathname);
 });
+
+mix.js('resources/assets/js/app.js', 'public/js');
 
 loadFilesFrom(path.resolve('./resources/assets/sass')).filter(filename => {
     return /^[^_].+\.s?css$/.test(path.basename(filename));
 }).forEach(filename => {
-    mix.sass(filename.substr(basePath.length+1), 'public/css');
+    let pathname = path.dirname(filename.substr(path.resolve('./resources/assets/sass').length+1))
+    mix.sass(filename.substr(basePath.length+1), 'public/css/'+pathname);
 });
 
 if (mix.inProduction()) {

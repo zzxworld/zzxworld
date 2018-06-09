@@ -8,6 +8,8 @@
 </head>
 <body>
     <div id="app">@yield('content')</div>
-@stack('js')
+    <script src="{{ mix('js/manifest.js') }}"></script>
+    <script src="{{ mix('js/vendor.js') }}"></script>
+    @stack('js')
 </body>
 </html>
