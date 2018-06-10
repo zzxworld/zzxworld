@@ -73,6 +73,7 @@ html, body, #app-notebook {
 .btn-note-list {
     ul.dropdown-menu{
         width: 360px;
+        padding: 1em 0;
 
         .note a {
             overflow: hidden;
@@ -80,9 +81,9 @@ html, body, #app-notebook {
             white-space: nowrap;
         }
 
-        .pagination {
+        .footer {
             margin: 0;
-            padding: 0.5em 1.43em;
+            padding: 1em 1.43em 0 1.43em;
         }
     }
 }
