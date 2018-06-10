@@ -15,6 +15,7 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 Route::get('user/sessions/check', 'User\SessionController@check');
+Route::get('users/sessions/user', 'User\SessionController@user');
 
 Route::resource('users', 'User\UserController');
 
