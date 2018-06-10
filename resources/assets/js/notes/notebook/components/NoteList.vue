@@ -11,12 +11,7 @@
                 <li class="footer" @click.stop>
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="input-group">
-                                <input type="text" class="form-control" v-model="filter.keyword" />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" @click="search">搜索</button>
-                                </span>
-                            </div>
+                            <NoteListSearch :keyword="filter.keyword" @search="search" />
                         </div>
                         <div class="col-sm-6">
                             <NoteListPagination :data="pagination" @goto="goto" />
@@ -30,9 +25,11 @@
 
 <script>
     import NoteListPagination from './NoteListPagination';
+    import NoteListSearch from './NoteListSearch';
 
     export default {
         components: {
+            NoteListSearch,
             NoteListPagination
         },
 
@@ -41,9 +38,7 @@
                 notes: [],
                 pagination: {},
                 filter: {
-                    limit: 2,
                     page: 1,
-                    keyword: null
                 }
             };
         },
@@ -62,7 +57,8 @@
                 this.$emit('selected', note);
             },
 
-            search() {
+            search(keyword) {
+                this.filter.keyword = keyword;
                 this.loadList();
             },
 

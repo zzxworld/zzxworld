@@ -1,11 +1,15 @@
 <template>
     <div class="input-group">
         <span class="input-group-btn">
-            <button class="btn btn-default" type="button" :disabled="withoutPrevPage" @click="prevPage">上页</button>
+            <button class="btn btn-default" type="button" :disabled="withoutPrevPage" @click="prevPage">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </button>
         </span>
         <input type="text" class="form-control" :placeholder="paginationInfo" />
         <span class="input-group-btn">
-            <button class="btn btn-default" type="button" :disabled="withoutNextPage" @click="nextPage">下页</button>
+            <button class="btn btn-default" type="button" :disabled="withoutNextPage" @click="nextPage">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </button>
         </span>
     </div>
 </template>
