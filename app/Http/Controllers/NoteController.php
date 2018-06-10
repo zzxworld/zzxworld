@@ -24,11 +24,19 @@ class NoteController extends Controller
         $this->authorize('index', Note::class);
         $limit = (int) $request->input('limit', 10);
 
-        $notes = Note::with('texts')
-            ->where('user_id', $request->user()->id)
-            ->orderBy('updated_at', 'desc')
-            ->paginate($limit);
+        $query = Note::with('texts')
+            ->where('user_id', $request->user()->id);
 
+        $keyword = $request->input('keyword');
+        if ($keyword) {
+            $query->whereIn('id', function ($query) use ($keyword) {
+                return $query->select('textable_id')->from('texts')
+                    ->where('textable_type', Note::MORPH_NAME)
+                    ->where('text', 'like', '%'.$keyword.'%');
+            });
+        }
+
+        $notes = $query->orderBy('updated_at', 'desc')->paginate($limit);
         $notes = new ListContainer($notes, function ($note) {
             return [
                 'id' => $note->id,

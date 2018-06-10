@@ -12,9 +12,9 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="input-group">
-                                <input type="text" class="form-control" />
+                                <input type="text" class="form-control" v-model="filter.keyword" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">搜索</button>
+                                    <button class="btn btn-default" type="button" @click="search">搜索</button>
                                 </span>
                             </div>
                         </div>
@@ -42,7 +42,8 @@
                 pagination: {},
                 filter: {
                     limit: 2,
-                    page: 1
+                    page: 1,
+                    keyword: null
                 }
             };
         },
@@ -59,6 +60,10 @@
 
             select(note) {
                 this.$emit('selected', note);
+            },
+
+            search() {
+                this.loadList();
             },
 
             goto(page) {
