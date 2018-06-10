@@ -13,4 +13,10 @@ class SessionController extends Controller
         $isLogined = $user ? true : false;
         return ['message' => 'ok', 'is_logined' => $isLogined];
     }
+
+    public function user(Request $request)
+    {
+        $user = $request->user();
+        return ['message' => 'ok', 'user' => $user];
+    }
 }
