@@ -66,32 +66,19 @@ html, body, #app-notebook {
     line-height: 1.6;
 }
 
-.btn-list {
+.btn-note-list {
     ul.dropdown-menu{
         width: 360px;
 
-        span {
-            display: inline-block;
-            vertical-align: bottom;
-        }
-
-        .summary {
-            width: 80%;
+        .note a {
             overflow: hidden;
-            text-overflow: ellipsis;
+            text-overflow:ellipsis;
+            white-space: nowrap;
         }
 
-        .updated-at {
-            float: right;
-            color: #999;
-        }
-
-        li {
-            border-bottom: 1px dashed #DDD;
-
-            &:last-child {
-                border-bottom: 0;
-            }
+        .pagination {
+            margin: 0;
+            padding: 0.5em 1.43em;
         }
     }
 }
@@ -107,7 +94,7 @@ html, body, #app-notebook {
         }
     }
 
-    .btn-list {
+    .btn-note-list {
         ul.dropdown-menu{
             width: 450px;
         }
@@ -116,7 +103,7 @@ html, body, #app-notebook {
 
 
 @media (min-width: $screen-lg-min) {
-    .btn-list {
+    .btn-note-list {
         ul.dropdown-menu{
             width: 600px;
         }
