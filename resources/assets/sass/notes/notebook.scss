@@ -89,6 +89,9 @@ html, body, #app-notebook {
 }
 
 .note-list-pagination {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+
     input.form-control {
         text-align: center;
     }
@@ -107,6 +110,12 @@ html, body, #app-notebook {
 
     input:-ms-input-placeholder {
         text-align: center;
+    }
+}
+
+@media (min-width: $screen-sm-min) {
+    .note-list-pagination {
+        margin: 0;
     }
 }
 
