@@ -1,11 +1,12 @@
 <template>
-    <textarea class="base-editor" v-model="inputValue"></textarea>
+    <textarea class="base-editor" :placeholder="placeholder" v-model="inputValue"></textarea>
 </template>
 
 <script>
     export default  {
         props: {
             value: String,
+            placeholder: String,
         },
 
         computed: {

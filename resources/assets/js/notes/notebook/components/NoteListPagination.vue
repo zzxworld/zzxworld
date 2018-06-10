@@ -1,5 +1,5 @@
 <template>
-    <div class="input-group">
+    <div class="input-group note-list-pagination">
         <span class="input-group-btn">
             <button class="btn btn-default" type="button" :disabled="withoutPrevPage" @click="prevPage">
                 <span class="glyphicon glyphicon-chevron-left"></span>

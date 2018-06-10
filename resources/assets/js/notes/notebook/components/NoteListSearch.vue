@@ -1,8 +1,10 @@
 <template>
-    <div class="input-group">
+    <div class="input-group note-list-search">
         <input type="text" class="form-control" v-model="keywordValue" @keyup.enter="search" />
         <span class="input-group-btn">
-            <button class="btn btn-default" type="button" @click="search">搜索</button>
+            <button class="btn btn-default" type="button" @click="search">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
         </span>
     </div>
 </template>

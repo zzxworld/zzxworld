@@ -1,13 +1,17 @@
 <template>
     <div id="app-notebook">
         <div id="app-notebook-content">
-            <BaseEditor v-model="note.content" />
+            <BaseEditor placeholder="记点什么..." v-model="note.content" />
         </div>
         <div id="app-notebook-footer">
             <nav>
                 <NoteList @selected="note=$event" />
-                <button class="btn btn-default" type="button" @click="add" v-if="isExistNote">新增</button>
-                <button class="btn btn-default" type="button" @click="save">保存</button>
+                <button class="btn btn-default" type="button" @click="save">
+                    <span class="glyphicon glyphicon-floppy-disk"></span> 保存
+                </button>
+                <button class="btn btn-default" type="button" @click="add" v-if="isExistNote">
+                    <span class="glyphicon glyphicon-file"></span> 新增
+                </button>
             </nav>
         </div>
     </div>

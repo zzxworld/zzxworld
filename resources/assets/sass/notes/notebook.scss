@@ -88,6 +88,28 @@ html, body, #app-notebook {
     }
 }
 
+.note-list-pagination {
+    input.form-control {
+        text-align: center;
+    }
+
+    input::-webkit-input-placeholder {
+        text-align: center;
+    }
+
+    input::-moz-placeholder {
+        text-align: center;
+    }
+
+    input:-moz-placeholder {
+        text-align: center;
+    }
+
+    input:-ms-input-placeholder {
+        text-align: center;
+    }
+}
+
 @media (min-width: $screen-md-min) {
     .base-editor {
         padding: 40px 80px;
