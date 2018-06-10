@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Note;
+use App\Support\ListContainer;
 
 class NoteController extends Controller
 {
@@ -21,25 +22,23 @@ class NoteController extends Controller
     public function index(Request $request)
     {
         $this->authorize('index', Note::class);
+        $limit = (int) $request->input('limit', 10);
 
         $notes = Note::with('texts')
             ->where('user_id', $request->user()->id)
             ->orderBy('updated_at', 'desc')
-            ->paginate(10);
+            ->paginate($limit);
 
-        $notes = $notes->map(function ($note) {
+        $notes = new ListContainer($notes, function ($note) {
             return [
                 'id' => $note->id,
                 'content' => $note->text,
                 'created_at' => $note->created_at->format('Y-m-d H:i:s'),
                 'updated_at' => $note->updated_at->format('Y-m-d H:i:s'),
             ];
-        });
+        }, 'notes');
 
-        return [
-            'message' => 'ok',
-            'notes' => $notes,
-        ];
+        return $notes->toArray(['message' => 'ok']);
     }
 
     /**
