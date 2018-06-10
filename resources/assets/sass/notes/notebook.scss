@@ -1,6 +1,3 @@
-// Variables
-@import "../variables";
-
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
@@ -16,22 +13,22 @@
     color: #DDD;
 }
 
-html, body, #app {
+html, body, #app-notebook {
     height: 100%;
 }
 
-#app {
+#app-notebook {
     position: relative;
 }
 
-#notebook-content {
+#app-notebook-content {
     position: absolute;
     width: 100%;
     top: 0;
     bottom: 65px;
 }
 
-#notebook-footer {
+#app-notebook-footer {
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -56,7 +53,7 @@ html, body, #app {
     }
 }
 
-.editor {
+.base-editor {
     width: 100%;
     height: 100%;
     border: 0;
@@ -100,11 +97,11 @@ html, body, #app {
 }
 
 @media (min-width: $screen-md-min) {
-    .editor {
+    .base-editor {
         padding: 40px 80px;
     }
 
-    #notebook-footer {
+    #app-notebook-footer {
         nav {
             padding: 15px 80px;
         }

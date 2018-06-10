@@ -1,18 +1,19 @@
 <template>
-    <div class="container">
-        <div class="form-group">
-            <HTMLEditor v-model="note.content" />
+    <div id="app-notebook">
+        <div id="app-notebook-content">
+            <BaseEditor v-model="note.content" />
         </div>
-        <div class="form-group">
-            <button class="btn btn-default" type="button" @click="add" v-if="isExistNote">新增</button>
-            <button class="btn btn-default" type="button" @click="save">保存</button>
+        <div id="app-notebook-footer">
+            <nav>
+                <button class="btn btn-default" type="button" @click="add" v-if="isExistNote">新增</button>
+                <button class="btn btn-default" type="button" @click="save">保存</button>
+            </nav>
         </div>
-        <div>{{ note.content }}</div>
     </div>
 </template>
 
 <script>
-    import HTMLEditor from './HTMLEditor';
+    import BaseEditor from '../../../components/BaseEditor';
     import swal from 'sweetalert';
 
     const emptyNote = () => {
@@ -24,7 +25,7 @@
 
     export default {
         components: {
-            HTMLEditor
+            BaseEditor
         },
 
         data() {
@@ -37,6 +38,12 @@
             isExistNote() {
                 return this.note.id > 0;
             },
+        },
+
+        watch: {
+            'note.content': _.debounce(function () {
+                this.saveToLocal();
+            }, 500)
         },
 
         methods: {
@@ -62,8 +69,6 @@
                     swal('', '保存失败!', 'error');
                 };
 
-                this.saveToLocal();
-
                 if (this.note.id > 0) {
                     axios.put('notes/'+this.note.id, this.note).then(response => {
                         this.note.id = response.data.note.id;
@@ -77,7 +82,7 @@
 
             saveToLocal() {
                 localStorage.setItem('note', JSON.stringify(this.note));
-            }
+            },
         },
 
         mounted() {
