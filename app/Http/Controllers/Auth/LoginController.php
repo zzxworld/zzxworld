@@ -43,7 +43,6 @@ class LoginController extends Controller
         if ($request->isXmlHttpRequest()) {
             return response()->json([
                 'message' => 'ok',
-                'user' => $user,
             ]);
         }
     }
