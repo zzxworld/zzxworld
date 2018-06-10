@@ -12,7 +12,7 @@ def deploy(category=None):
 
         if category == 'frontend':
             run('npm run production')
-        elif category == 'frontendpackage':
+        elif category == 'npm':
             run('npm i')
         elif category == 'migration':
             run('php artisan migrate')
