@@ -23,6 +23,8 @@ const loadFilesFrom = (folder) => {
 const basePath = path.resolve('./');
 
 loadFilesFrom(path.resolve('./resources/assets/js')).filter(filename => {
+    return !/\/helpers\//.test(filename);
+}).filter(filename => {
     return /\.js$/.test(filename);
 }).filter(filename => {
     return !/\/(bootstrap|js\/app)\.js/.test(filename);
