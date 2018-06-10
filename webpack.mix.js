@@ -44,4 +44,4 @@ if (mix.inProduction()) {
     mix.version();
 }
 
-mix.extract(['lodash', 'vue', 'jquery', 'axios']);
+mix.extract(['lodash', 'sweetalert', 'vue', 'jquery', 'axios']);
