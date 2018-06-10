@@ -5,21 +5,28 @@
         </div>
         <div id="app-notebook-footer">
             <nav>
-                <NoteList @selected="note=$event" />
-                <button class="btn btn-default" type="button" @click="save">
+                <NoteList :disabled="isNotLogin" @selected="note=$event" />
+                <button class="btn btn-default" type="button" :disabled="isNotLogin" @click="save">
                     <span class="glyphicon glyphicon-floppy-disk"></span> 保存
                 </button>
                 <button class="btn btn-default" type="button" @click="add" v-if="isExistNote">
-                    <span class="glyphicon glyphicon-file"></span> 新增
+                    <span class="glyphicon glyphicon-file"></span> 新笔记
                 </button>
+                <div class="pull-right">
+                    <button class="btn btn-default" @click="login" v-if="isNotLogin">登录</button>
+                    <button class="btn btn-default" @click="logout" v-if="!isNotLogin">退出</button>
+                </div>
             </nav>
         </div>
+        <BaseLoginWindow :handle="openLoginWindow" @close="cancelLogin" @logined="loadUser" />
     </div>
 </template>
 
 <script>
-    import swal from 'sweetalert';
+    import queue from 'queue';
+    import { warningAlert, errorAlert, confirmAlert } from '../../../helpers/alerts';
     import BaseEditor from '../../../components/BaseEditor';
+    import BaseLoginWindow from '../../../components/BaseLoginWindow';
     import NoteList from './NoteList';
 
     const emptyNote = () => {
@@ -32,12 +39,15 @@
     export default {
         components: {
             BaseEditor,
+            BaseLoginWindow,
             NoteList,
         },
 
         data() {
             return {
                 note: emptyNote(),
+                user: null,
+                openLoginWindow: false,
             };
         },
 
@@ -45,6 +55,10 @@
             isExistNote() {
                 return this.note.id > 0;
             },
+
+            isNotLogin() {
+                return this.user === null;
+            }
         },
 
         watch: {
@@ -58,22 +72,24 @@
                 this.note = emptyNote();
             },
 
-            save() {
+            save(callback = () => {}) {
                 const successHandler = response => {
                     this.note.id = response.data.note.id;
                     this.saveToLocal();
+
+                    callback();
                 };
 
                 const errorHandler =  error => {
                     const code = error.response.status;
 
                     if (code == 403) {
-                        return swal('', '请先登录!', 'warning');
+                        return warningAlert('请先登录!')
                     } else if (code == 422) {
-                        return swal('', error.response.data.message, 'warning');
+                        return warningAlert(error.response.data.message);
                     }
 
-                    swal('', '保存失败!', 'error');
+                    errorAlert('保存笔记失败!');
                 };
 
                 if (this.note.id > 0) {
@@ -90,13 +106,62 @@
             saveToLocal() {
                 localStorage.setItem('note', JSON.stringify(this.note));
             },
+
+            login() {
+                this.openLoginWindow = true;
+            },
+
+            logout() {
+                confirmAlert('确定要退出登录吗?', () => {
+                    let q = queue();
+
+                    q.push(next => {
+                        this.save(next);
+                    });
+
+                    q.push(next => {
+                        axios.post('logout').then(() => {
+                            this.user = null;
+                            next();
+                        });
+                    });
+
+                    q.push(next => {
+                        this.note = emptyNote();
+                        this.saveToLocal();
+                    });
+
+                    q.start();
+                });
+            },
+
+            cancelLogin() {
+                this.openLoginWindow = false;
+            },
+
+            loadUser(callback = () => {}) {
+                axios.get('users/sessions/user').then(response => {
+                    this.user = response.data.user;
+                    callback();
+                });
+            }
         },
 
         mounted() {
-            let note = localStorage.getItem('note');
-            if (note) {
-                this.note = JSON.parse(note);
-            }
+            let q = queue();
+
+            q.push(next => {
+                let note = localStorage.getItem('note');
+                if (note) {
+                    this.note = JSON.parse(note);
+                }
+            });
+
+            q.push(next => {
+                this.loadUser(next);
+            });
+
+            q.start();
         }
     }
 </script>

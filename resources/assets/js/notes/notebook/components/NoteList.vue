@@ -1,9 +1,8 @@
 <template>
     <div class="btn-group dropup">
         <div id="app-notebook-list" class="dropdown btn-note-list">
-            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <button class="btn btn-default dropdown-toggle" type="button" :disabled="disabled" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 <span class="glyphicon glyphicon-menu-hamburger"></span> 笔记列表
-                <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
                 <li class="note" v-for="note in notes" :key="note.id">
@@ -32,6 +31,10 @@
         components: {
             NoteListSearch,
             NoteListPagination
+        },
+
+        props: {
+            disabled: Boolean
         },
 
         data() {
