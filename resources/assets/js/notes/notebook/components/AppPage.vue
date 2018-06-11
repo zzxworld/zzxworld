@@ -5,7 +5,7 @@
         </div>
         <div id="app-notebook-footer">
             <nav>
-                <NoteList :disabled="isNotLogin" @selected="note=$event" />
+                <NoteList :disabled="isNotLogin" @selected="selectNote" />
                 <button class="btn btn-default" type="button" :disabled="isNotLogin" @click="save">
                     <span class="glyphicon glyphicon-floppy-disk"></span> 保存
                 </button>
@@ -105,6 +105,11 @@
 
             saveToLocal() {
                 localStorage.setItem('note', JSON.stringify(this.note));
+            },
+
+            selectNote(note) {
+                this.note = note;
+                this.saveToLocal();
             },
 
             login() {
