@@ -14,6 +14,7 @@ yarn-error.log
 public/js/
 public/css/
 public/fonts/
+public/assets/
 public/mix-manifest.json
 app/Console/Commands/Test.php
 .DS_Store
