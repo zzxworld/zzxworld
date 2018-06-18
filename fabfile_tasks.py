@@ -12,6 +12,8 @@ def deploy(category=None):
 
         if category == 'frontend':
             run('npm run production')
+        elif category == 'frontenddll':
+            run('npm run dll')
         elif category == 'npm':
             run('npm i')
         elif category == 'migration':
