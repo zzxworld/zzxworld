@@ -170,3 +170,5 @@
         }
     }
 </script>
+
+<style src="./AppPage.scss" lang="scss"></style>

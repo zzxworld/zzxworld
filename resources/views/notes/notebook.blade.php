@@ -3,7 +3,7 @@
 @section('title', '笔记本 - zzxworld')
 
 @push('head')
-    <link href="{{ mix('css/notes/notebook.css') }}" rel="stylesheet">
+    <link href="{{ url('css/app.css') }}" rel="stylesheet">
 @endpush
 
 @push('body')
