@@ -11,6 +11,8 @@
         "dll": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=webpack.dll.config.js -p"
     },
     "devDependencies": {
+        "babel-loader": "^7.1.4",
+        "babel-preset-env": "^1.7.0",
         "cross-env": "^5.1",
         "vue-loader": "^15.2.4",
         "webpack": "^3.12.0",
