@@ -25,7 +25,7 @@
 <script>
     import queue from 'queue';
     import { warningAlert, errorAlert, confirmAlert } from '../../../helpers/alerts';
-    import BaseEditor from '../../../components/BaseMarkDownEditor.vue';
+    import BaseEditor from '../../../components/BaseMarkdownEditor.vue';
     import BaseLoginWindow from '../../../components/BaseLoginWindow.vue';
     import NoteList from './NoteList.vue';
 
