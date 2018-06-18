@@ -13,7 +13,7 @@
         },
 
         components: {
-            'v-item': require('./ListItem'),
+            'v-item': require('./ListItem.vue'),
         },
 
         methods: {

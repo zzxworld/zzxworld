@@ -24,8 +24,8 @@
 </template>
 
 <script>
-    import NoteListPagination from './NoteListPagination';
-    import NoteListSearch from './NoteListSearch';
+    import NoteListPagination from './NoteListPagination.vue';
+    import NoteListSearch from './NoteListSearch.vue';
 
     export default {
         components: {

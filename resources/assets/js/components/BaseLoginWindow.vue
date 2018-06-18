@@ -1,5 +1,5 @@
 <template>
-    <BaseWindow title="登录" size="sm" :handle="handle" @close="close">
+    <BaseWindow title="登录" :handle="handle" @close="close">
         <div class="form-group">
             <label>账号</label>
             <input type="text" class="form-control" v-model="account" @keyup.enter="login" />
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-    import BaseWindow from './BaseWindow';
+    import BaseWindow from './BaseWindow.vue';
     import { successAlert, warningAlert, errorAlert, closeAlert } from '../helpers/alerts';
 
     export default {

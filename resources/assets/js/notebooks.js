@@ -3,8 +3,8 @@ import Vue from 'vue';
 import * as moment from 'moment';
 import './bootstrap';
 
-Vue.component('v-editor', require('./components/Editor'));
-Vue.component('v-notebook-list', require('./notebooks/List'));
+Vue.component('v-editor', require('./components/Editor.vue'));
+Vue.component('v-notebook-list', require('./notebooks/List.vue'));
 
 let currentDatetime = function () {
     return moment().format('YYYY-MM-DD HH:mm:ss');

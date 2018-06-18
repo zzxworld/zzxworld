@@ -25,9 +25,9 @@
 <script>
     import queue from 'queue';
     import { warningAlert, errorAlert, confirmAlert } from '../../../helpers/alerts';
-    import BaseEditor from '../../../components/BaseMarkDownEditor';
-    import BaseLoginWindow from '../../../components/BaseLoginWindow';
-    import NoteList from './NoteList';
+    import BaseEditor from '../../../components/BaseMarkDownEditor.vue';
+    import BaseLoginWindow from '../../../components/BaseLoginWindow.vue';
+    import NoteList from './NoteList.vue';
 
     const emptyNote = () => {
         return {
