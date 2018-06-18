@@ -87,9 +87,9 @@
         @yield('content')
     </div>
 
-    <script src="{{ mix('js/manifest.js') }}"></script>
-    <script src="{{ mix('js/vendor.js') }}"></script>
-    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ url('assets/js/runtime.js') }}"></script>
+    <script src="{{ url('assets/js/vendor.js') }}"></script>
+    <script src="{{ url('assets/js/app.js') }}"></script>
     @stack('js')
 
     @if (defined('LARAVEL_START'))

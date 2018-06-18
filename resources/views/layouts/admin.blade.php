@@ -8,8 +8,8 @@
 </head>
 <body>
     <div id="app">@yield('content')</div>
-    <script src="{{ mix('js/manifest.js') }}"></script>
-    <script src="{{ mix('js/vendor.js') }}"></script>
+    <script src="{{ url('assets/js/runtime.js') }}"></script>
+    <script src="{{ url('assets/js/vendor.js') }}"></script>
     @stack('js')
 </body>
 </html>

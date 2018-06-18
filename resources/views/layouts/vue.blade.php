@@ -7,8 +7,8 @@
 </head>
 <body>
     <div id="app">@yield('content')</div>
-    <script src="{{ url('assets/runtime.js') }}"></script>
-    <script src="{{ url('assets/vendor.js') }}"></script>
+    <script src="{{ url('assets/js/runtime.js') }}"></script>
+    <script src="{{ url('assets/js/vendor.js') }}"></script>
     @stack('body')
 </body>
 </html>
