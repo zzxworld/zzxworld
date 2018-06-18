@@ -7,5 +7,5 @@
 @endpush
 
 @push('body')
-    <script src="{{ url('assets/js/notes/notebook/app.js') }}"></script>
+    <script src="{{ asset_url('notes/notebook/app.js') }}"></script>
 @endpush

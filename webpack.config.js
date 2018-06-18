@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 const loadFilesFrom = (folder) => {
     let files = [];
@@ -34,7 +35,7 @@ loadFilesFrom(path.resolve('./resources/assets/js')).filter(filename => {
 }).filter(filename => {
     return /\.js$/.test(filename);
 }).filter(filename => {
-    return !/\/(bootstrap|js\/app)\.js/.test(filename);
+    return !/\/(bootstrap)\.js/.test(filename);
 }).forEach(filename => {
     let pathname = filename.substr(path.resolve('./resources/assets/js').length+1)
 
@@ -46,7 +47,7 @@ module.exports = {
 
     output: {
         path: path.resolve(__dirname, 'public/assets/js'),
-        filename: '[name].js'
+        filename: '[name].[chunkhash].js'
     },
 
     module: {
@@ -88,8 +89,9 @@ module.exports = {
             context: __dirname
         }),
         new VueLoaderPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'runtime'
-        }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'runtime'
+        // }),
+        new ManifestPlugin()
     ]
 }

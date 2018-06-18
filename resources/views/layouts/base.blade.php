@@ -7,7 +7,6 @@
 </head>
 <body>
 @yield('content')
-<script src="{{ url('assets/js/runtime.js') }}"></script>
 <script src="{{ url('assets/js/vendor.js') }}"></script>
 @stack('bottom')
 </body>

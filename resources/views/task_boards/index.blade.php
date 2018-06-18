@@ -6,5 +6,5 @@
 @endpush
 
 @push('body')
-    <script src="{{ url('assets/js/task_boards/app.js') }}"></script>
+    <script src="{{ asset_url('task_boards/app.js') }}"></script>
 @endpush
