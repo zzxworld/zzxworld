@@ -25,7 +25,7 @@
 <script>
     import queue from 'queue';
     import { warningAlert, errorAlert, confirmAlert } from '../../../helpers/alerts';
-    import BaseEditor from '../../../components/BaseEditor';
+    import BaseEditor from '../../../components/BaseMarkDownEditor';
     import BaseLoginWindow from '../../../components/BaseLoginWindow';
     import NoteList from './NoteList';
 

@@ -57,19 +57,6 @@ html, body, #app-notebook {
     }
 }
 
-.base-editor {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    display: block;
-    outline: none;
-    resize: none;
-    box-shadow: inset 2px 2px 2px rgba(0,0,0,.075);
-    padding: 20px;
-    font-size: 21px;
-    line-height: 1.6;
-}
-
 .btn-note-list {
     ul.dropdown-menu{
         width: 360px;
@@ -113,6 +100,18 @@ html, body, #app-notebook {
     }
 }
 
+#app-notebook-content {
+    .CodeMirror {
+        height: 100%;
+        font-size: 16px;
+        box-shadow: inset 2px 2px 2px rgba(0,0,0,.075);
+    }
+
+    .CodeMirror-lines {
+        padding: 20px;
+    }
+}
+
 @media (min-width: $screen-sm-min) {
     .note-list-pagination {
         margin: 0;
@@ -120,8 +119,10 @@ html, body, #app-notebook {
 }
 
 @media (min-width: $screen-md-min) {
-    .base-editor {
-        padding: 40px 80px;
+    #app-notebook-content {
+        .CodeMirror-lines {
+            padding: 40px 80px;
+        }
     }
 
     #app-notebook-footer {
