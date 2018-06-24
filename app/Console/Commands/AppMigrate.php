@@ -3,6 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Models\Post;
+use App\Models\LinuxCommand;
+use App\Models\NewsPost;
 use DB;
 
 class AppMigrate extends Command
@@ -12,22 +15,67 @@ class AppMigrate extends Command
 
     public function handle()
     {
-        $this->changeMorphName();
+        DB::table('articles')->truncate();
+
+        $this->exportBlogs();
+        $this->exportLinuxCommands();
+        $this->exportNews();
     }
 
-    protected function changeMorphName()
+    protected function exportBlogs()
     {
-        $mapping = [
-            \App\Models\Post::MORPH_NAME => 'App\Models\Post',
-            \App\Models\Note::MORPH_NAME => 'App\Models\Note',
-            \App\Models\NewsPost::MORPH_NAME => 'App\Models\NewsPost',
-            \App\Models\Comment::MORPH_NAME => 'App\Models\Comment',
-            \App\Models\LinuxCommand::MORPH_NAME => 'App\Models\LinuxCommand',
-        ];
+        Post::chunk(100, function ($items) {
+            foreach ($items as $rs) {
+                $data = [
+                    'type' => 'blog',
+                    'original_id' => $rs->id,
+                    'title' => $rs->title,
+                    'url' => sprintf('posts/%s', $rs->id),
+                    'content' => $rs->text,
+                    'created_at' => $rs->published_at,
+                    'updated_at' => $rs->published_at,
+                ];
 
-        foreach ($mapping as $name => $className) {
-            DB::table('comments')->where('commentable_type', $className)->update(['commentable_type' => $name]);
-            DB::table('texts')->where('textable_type', $className)->update(['textable_type' => $name]);
-        }
+                DB::table('articles')->insert($data);
+            }
+        });
+    }
+
+    protected function exportLinuxCommands()
+    {
+        LinuxCommand::chunk(100, function ($items) {
+            foreach ($items as $rs) {
+                $data = [
+                    'type' => 'linux-command',
+                    'original_id' => $rs->id,
+                    'title' => sprintf('Linux %s命令: %s', $rs->effect, $rs->name),
+                    'url' => sprintf('linux/commands/%s', $rs->name),
+                    'content' => $rs->text,
+                    'created_at' => $rs->published_at,
+                    'updated_at' => $rs->published_at,
+                ];
+
+                DB::table('articles')->insert($data);
+            }
+        });
+    }
+
+    protected function exportNews()
+    {
+        NewsPost::chunk(100, function ($items) {
+            foreach ($items as $rs) {
+                $data = [
+                    'type' => 'news',
+                    'original_id' => $rs->id,
+                    'title' => $rs->title,
+                    'url' => sprintf('news/%s', $rs->id),
+                    'content' => $rs->text,
+                    'created_at' => $rs->updated_at,
+                    'updated_at' => $rs->updated_at,
+                ];
+
+                DB::table('articles')->insert($data);
+            }
+        });
     }
 }
