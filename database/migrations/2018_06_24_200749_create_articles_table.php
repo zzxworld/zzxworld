@@ -19,6 +19,7 @@ class CreateArticlesTable extends Migration
             $table->string('type');
             $table->string('title');
             $table->string('url');
+            $table->string('attributes');
             $table->mediumText('content');
             $table->timestamps();
         });
