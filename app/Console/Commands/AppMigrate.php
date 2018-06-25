@@ -31,6 +31,10 @@ class AppMigrate extends Command
                     'original_id' => $rs->id,
                     'title' => $rs->title,
                     'url' => sprintf('posts/%s', $rs->id),
+                    'attributes' => json_encode([
+                        'slug' => $rs->slug,
+                        'source_url' => $rs->source_url,
+                    ]),
                     'content' => $rs->text,
                     'created_at' => $rs->published_at,
                     'updated_at' => $rs->published_at,
@@ -48,8 +52,12 @@ class AppMigrate extends Command
                 $data = [
                     'type' => 'linux-command',
                     'original_id' => $rs->id,
-                    'title' => sprintf('Linux %s命令: %s', $rs->effect, $rs->name),
+                    'title' => sprintf('%s命令: %s', $rs->effect, $rs->name),
                     'url' => sprintf('linux/commands/%s', $rs->name),
+                    'attributes' => json_encode([
+                        'name' => $rs->name,
+                        'effect' => $rs->effect,
+                    ]),
                     'content' => $rs->text,
                     'created_at' => $rs->published_at,
                     'updated_at' => $rs->published_at,
@@ -69,6 +77,10 @@ class AppMigrate extends Command
                     'original_id' => $rs->id,
                     'title' => $rs->title,
                     'url' => sprintf('news/%s', $rs->id),
+                    'attributes' => json_encode([
+                        'is_disabled' => $rs->is_disabled,
+                        'source_url' => $rs->url,
+                    ]),
                     'content' => $rs->text,
                     'created_at' => $rs->updated_at,
                     'updated_at' => $rs->updated_at,
